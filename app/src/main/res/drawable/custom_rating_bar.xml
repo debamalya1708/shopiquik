@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <bitmap
+            android:src="@drawable/ic_baseline_star_outline_24"
+            android:tint="#CCCCCC" /> <!-- Color of empty stars -->
+    </item>
+    <item android:id="@android:id/secondaryProgress">
+        <bitmap
+            android:src="@drawable/ic_baseline_star_outline_24"
+            android:tint="#CCCCCC" /> <!-- Color of filled stars -->
+    </item>
+    <item android:id="@android:id/progress">
+        <bitmap
+            android:src="@drawable/startfill"
+            android:tint="#FFD700" /> <!-- Color of filled stars -->
+    </item>
+</layer-list>

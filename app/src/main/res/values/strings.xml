@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ShopiQuik</string>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>female</item>
+    </string-array>
+    <string-array name="price_array">
+        <item>Below 500</item>
+        <item>Below 1000</item>
+        <item>Below 5000</item>
+        <item>Above 5000</item>
+    </string-array>
+    <string-array name="category_array"></string-array>
+
+    <string-array name="brand_array"></string-array>
+
+
+    <string name="category_name">Select Category</string>
+</resources>

@@ -1,0 +1,163 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background">
+
+    <!-- Dialog Title -->
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get The Product You Want"
+        android:textSize="20sp"
+        android:textColor="#111"
+        android:padding="16dp"
+        android:gravity="center"
+        android:background="@color/colorPrimary" />
+
+    <!-- Dialog Content -->
+    <LinearLayout
+        android:id="@+id/dropdowns_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+            <!-- First Dropdown and Label -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/dropdown_dialog_backgroud"
+                android:layout_marginVertical="5dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Category" />
+
+                <Spinner
+                    android:id="@+id/category_spinner"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Second Dropdown and Label -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/dropdown_dialog_backgroud"
+                android:layout_marginVertical="5dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Brand" />
+
+                <Spinner
+                    android:id="@+id/brand_spinner"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Third Dropdown and Label -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/dropdown_dialog_backgroud"
+                android:layout_marginVertical="5dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Gender" />
+
+                <Spinner
+                    android:id="@+id/gender_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Forth Dropdown and Label -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/dropdown_dialog_backgroud"
+                android:layout_marginVertical="5dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Price" />
+
+                <Spinner
+                    android:id="@+id/price_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        <Button
+            android:id="@+id/search_dialog_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:layout_marginVertical="10dp"
+            android:textColor="#111"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:background="@drawable/search_button"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+    <!-- Dialog Action Button -->
+    <Button
+        android:id="@+id/dialog_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:textColor="#111"
+        android:visibility="gone"
+        android:background="@color/colorPrimary"
+        android:padding="16dp" />
+
+</LinearLayout>

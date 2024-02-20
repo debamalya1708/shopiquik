@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar android:layout_height="60dp"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background = "@drawable/buttonaction"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fontFamily="@font/aref_ruqaa_bold"
+        android:text="ShopiQuik"
+        android:id="@+id/appBarTitle"
+        android:layout_gravity="center_vertical"
+        android:textColor="#111"
+        android:textSize="35dp" />
+
+
+
+    <ImageView
+        android:id="@+id/fav_Icon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/transparent"
+        android:elevation="5dp"
+        android:padding="5dp"
+        android:src="@drawable/heart_unfilled_icon"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/infoIcon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/transparent"
+        android:elevation="5dp"
+        android:padding="5dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_outline_dashboard_24"
+        app:tint="@color/white" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/homeIcon"-->
+<!--        android:layout_width="35dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_gravity="center_vertical"-->
+<!--        android:background="@color/transparent"-->
+<!--        android:elevation="5dp"-->
+<!--        android:padding="5dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:src="@drawable/ic_outline_home_24"-->
+<!--        app:tint="@color/white" />-->
+
+</LinearLayout>
+
+</androidx.appcompat.widget.Toolbar>

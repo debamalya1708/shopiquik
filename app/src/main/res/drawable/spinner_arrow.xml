@@ -1,0 +1,16 @@
+<!-- res/drawable/spinner_arrow.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="24dp"
+        android:height="24dp"
+        android:gravity="center_vertical|end">
+        <rotate
+            android:fromDegrees="180"
+            android:toDegrees="180">
+            <shape android:shape="rectangle">
+                <size android:width="8dp" />
+                <solid android:color="#FF0000" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

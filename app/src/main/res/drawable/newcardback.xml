@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    android:thickness="5dp"
+    android:useLevel="false"
+    >
+<!--    <corners-->
+<!--        android:topLeftRadius="18dp"-->
+<!--        android:topRightRadius="18dp"-->
+<!--        android:bottomLeftRadius="18dp"-->
+<!--        android:bottomRightRadius="18dp"-->
+<!--        />-->
+    <gradient
+        android:startColor="@color/teal_200"
+        android:endColor="@color/teal_200"
+        android:angle="270"/>
+
+</shape>
