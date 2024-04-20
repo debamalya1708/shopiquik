@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/fav_toolbar"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
@@ -35,10 +35,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:fontFamily="sans-serif-condensed-light"
+            android:fontFamily="@font/average_sans"
             android:gravity="start"
             android:layout_marginStart="5dp"
             android:text="All your Favorites are here..."
+            android:layout_marginBottom="10dp"
             android:textSize="18sp"
             android:textColor="#8C8C8C"/>
 

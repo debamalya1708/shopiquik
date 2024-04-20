@@ -32,6 +32,17 @@ public class Product implements Serializable {
     @ColumnInfo (name = "images")
     private String images;
 
+    @ColumnInfo(name = "gender")
+    private String gender;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     @ColumnInfo(name = "category")
     private String category;
 
@@ -165,7 +176,9 @@ public class Product implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Product(int id, String title, String description, String price, String link, String country, String images, String category, String subCategory, String featured, String rating, String occasion, String brand, String createdAt) {
+    public Product(int id, String title, String description, String price, String link,
+                   String country, String images, String category, String gender, String subCategory,
+                   String featured, String rating, String occasion, String brand, String createdAt) {
         Id = id;
         this.title = title;
         this.description = description;
@@ -174,6 +187,7 @@ public class Product implements Serializable {
         this.country = country;
         this.images = images;
         this.category = category;
+        this.gender = gender;
         this.subCategory = subCategory;
         this.featured = featured;
         this.rating = rating;

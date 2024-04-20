@@ -15,9 +15,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_centerInParent="true"
-                android:fontFamily="sans-serif-light"
-                android:text="Category"
+                android:fontFamily="@font/average_sans"
                 android:gravity="center_vertical"
+                android:text="Category"
                 android:textColor="#111"
                 android:textSize="15sp" />
 

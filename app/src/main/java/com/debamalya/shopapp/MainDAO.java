@@ -6,6 +6,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RawQuery;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +41,8 @@ public interface MainDAO {
     @Query("SELECT * FROM product WHERE id = :value ")
     Optional<Product> getProduct(int value);
 
+//    @Query("SELECT * FROM product WHERE category = :category AND gender = :gender AND price->>'$.amazon' <= 6500 OR price->>'$.other'<= 6500")
+//    List<Product> getAllFilterProducts(String category,String gender,String price);
 
     @Query("SELECT * FROM product where :column = :value")
     List<Product> getAllByColumnAndColumnValue(String column, String value);

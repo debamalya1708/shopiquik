@@ -1,46 +1,62 @@
 package com.debamalya.shopapp;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.ViewHolder> implements Filterable {
+import com.bumptech.glide.Glide;
 
+import java.util.List;
 
-    @Override
-    public Filter getFilter() {
-        return null;
+public class ImageSliderAdapter{
+
+    private Context mContext;
+    private ViewFlipper mViewFlipper;
+    private List<SliderItem> sliderImageList;
+
+    public ImageSliderAdapter(Context context, ViewFlipper viewFlipper, List<SliderItem> imageUrls) {
+        mContext = context;
+        mViewFlipper = viewFlipper;
+        sliderImageList = imageUrls;
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder{
-
-        ImageView imageView;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.imageView);
+    public void loadImages() {
+        for (SliderItem imageUrl : sliderImageList) {
+            ImageView imageView = new ImageView(mContext);
+            Glide.with(mContext)
+                    .load(imageUrl.getImage())
+                    .into(imageView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Handle click event for this image
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setData(Uri.parse(imageUrl.getAction()));
+                        mContext.startActivity(intent);
+                    }
+            });
+            mViewFlipper.addView(imageView);
         }
+
+        // Set animation
+        mViewFlipper.setInAnimation(mContext, android.R.anim.fade_in);
+        mViewFlipper.setOutAnimation(mContext, android.R.anim.fade_out);
+
+        // Set flipping interval
+        mViewFlipper.setFlipInterval(5000); // 3 seconds
+        mViewFlipper.setAutoStart(true); // Start flipping
     }
 }

@@ -1,14 +1,17 @@
 <resources>
     <string name="app_name">ShopiQuik</string>
     <string-array name="gender_array">
+        <item>None</item>
         <item>Male</item>
-        <item>female</item>
+        <item>Female</item>
     </string-array>
     <string-array name="price_array">
-        <item>Below 500</item>
-        <item>Below 1000</item>
-        <item>Below 5000</item>
-        <item>Above 5000</item>
+        <item>None</item>
+        <item>Below</item>
+        <item>Above</item>
+        <!--        <item>Below 1000</item>-->
+        <!--        <item>Below 5000</item>-->
+        <!--        <item>Above 5000</item>-->
     </string-array>
     <string-array name="category_array"></string-array>
 

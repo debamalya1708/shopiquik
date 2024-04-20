@@ -1,19 +1,39 @@
 package com.debamalya.shopapp;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
+import androidx.core.view.GravityCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView categoryRecyclerView;
     private RecyclerView brandRecyclerView;
-    private RecyclerView featureProductRecyclerView;
+    private RecyclerView featureProductRecyclerView,featureProductRecyclerView1,featureProductRecyclerView2;
     private List<Product> productList = new ArrayList<>();
     private List<Product> featureProductList = new ArrayList<>();
     private List<Brand> brandList = new ArrayList<>();
@@ -63,10 +83,20 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> brandImageList = new ArrayList<>();
     private TextView viewAllBrands;
     private ImageView infoIcon, favIcon;
+    private EditText dialogAmount;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton floatingActionButton;
-    private Spinner categorySpinner,brandSpinner, genderSpinner,priceSpinner;
+    private Spinner categorySpinner, genderSpinner,priceSpinner;
     private ArrayAdapter<CharSequence> genderArrayAdapter,priceArrayAdapter;
+    private long pressedTime;
+    private TextView favoriteCount;
+    private ViewFlipper viewFlipper,viewFlipperCover,viewFlipperCover1,viewFlipperCover2;
+    private ImageButton mBtnPrevious,btn_previousCover,btn_previousCover1,btn_previousCover2;
+    private ImageButton mBtnNext,btn_nextCover,btn_nextCover1,btn_nextCover2;
+
+    private NestedScrollView nestedScrollView;
+    private Button fabButton;
+    private int lastScrollY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +111,58 @@ public class MainActivity extends AppCompatActivity {
 
         brandDB = BrandDB.getInstance(this);
 
+        nestedScrollView = findViewById(R.id.scrollContainer);
+
+        fabButton = findViewById(R.id.back_to_top_button);
+
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > lastScrollY && fabButton.getVisibility() == View.VISIBLE || scrollY == 0) {
+                    // Scrolling down, hide FAB
+                    fabButton.setVisibility(View.GONE);
+                } else if (scrollY < lastScrollY) {
+                    // Scrolling up or at the top, show FAB
+                    fabButton.setVisibility(View.VISIBLE);
+                }
+
+                lastScrollY = scrollY;
+            }
+        });
+
+        fabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Scroll to the top of the NestedScrollView when FAB is clicked
+                nestedScrollView.smoothScrollTo(0, 0);
+            }
+        });
+
+
         mRequestQueue = Volley.newRequestQueue(MainActivity.this);
 
         linearLayoutManager = new LinearLayoutManager(MainActivity.this,
                 LinearLayoutManager.HORIZONTAL,false);
 
-
         categoryRecyclerView = findViewById(R.id.category_recyclerView);
 
-        favIcon = findViewById(R.id.fav_Icon);
+        viewFlipper = findViewById(R.id.viewFlipper);
+        viewFlipperCover = findViewById(R.id.viewFlipperCover);
+        viewFlipperCover1 = findViewById(R.id.viewFlipperCover1);
+        viewFlipperCover2 = findViewById(R.id.viewFlipperCover2);
+
+        mBtnPrevious = findViewById(R.id.btn_previous);
+        mBtnNext = findViewById(R.id.btn_next);
+
+        btn_previousCover = findViewById(R.id.btn_previousCover);
+        btn_nextCover = findViewById(R.id.btn_nextCover);
+
+        btn_previousCover1 = findViewById(R.id.btn_previousCover1);
+        btn_nextCover1 = findViewById(R.id.btn_nextCover1);
+
+        btn_previousCover2 = findViewById(R.id.btn_previousCover2);
+        btn_nextCover2 = findViewById(R.id.btn_nextCover2);
+
 
         viewAllBrands = findViewById(R.id.viewAllBrands);
 
@@ -100,6 +173,12 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Animation anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.scale_up);
+                v.startAnimation(anim);
+                Vibrator vibrator = (Vibrator) MainActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+                if (vibrator != null) {
+                    vibrator.vibrate(50); // Vibrate for 100 milliseconds
+                }
                 showCustomDialog(); // Show the custom dialog when the button is clicked
             }
         });
@@ -119,11 +198,23 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(intent);
             }
         });
+        favIcon = findViewById(R.id.fav_Icon);
+
 
         favIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, FavoriteProducts.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
+        infoIcon = findViewById(R.id.infoIcon);
+
+        infoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MoreActivity.class);
                 MainActivity.this.startActivity(intent);
             }
         });
@@ -138,6 +229,18 @@ public class MainActivity extends AppCompatActivity {
 
         featureProductRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
 
+        featureProductRecyclerView1 = findViewById(R.id.feature_product_recyclerView1);
+
+        featureProductRecyclerView1.setHasFixedSize(true);
+
+        featureProductRecyclerView1.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+
+        featureProductRecyclerView2 = findViewById(R.id.feature_product_recyclerView2);
+
+        featureProductRecyclerView2.setHasFixedSize(true);
+
+        featureProductRecyclerView2.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+
         parseProductJson();
         showProduct();
 
@@ -146,6 +249,13 @@ public class MainActivity extends AppCompatActivity {
 
         parseBrandJson();
         showBrand();
+
+        setFavoriteCount();
+
+        setFeatureFlipper();
+        setViewFlipperCover();
+        setViewFlipperCover1();
+        setViewFlipperCover2();
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
@@ -161,10 +271,174 @@ public class MainActivity extends AppCompatActivity {
                 showProduct();
                 showCategory();
                 showBrand();
+                setFavoriteCount();
+                setFeatureFlipper();
+                setViewFlipperCover();
+                setViewFlipperCover1();
+                setViewFlipperCover2();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
 
+    private void setFeatureFlipper(){
+        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
+        setFeaturedImageSlider(URL,viewFlipper,mBtnPrevious,mBtnNext);
+    }
+
+    private void setViewFlipperCover(){
+        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
+        setFeaturedImageSlider(URL,viewFlipperCover,btn_previousCover,btn_nextCover);
+    }
+
+    private void setViewFlipperCover1(){
+        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
+        setFeaturedImageSlider(URL,viewFlipperCover1,btn_previousCover1,btn_nextCover1);
+    }
+
+    private void setViewFlipperCover2(){
+        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
+        setFeaturedImageSlider(URL,viewFlipperCover2,btn_previousCover2,btn_nextCover2);
+    }
+
+    private void setFeaturedImageSlider(String URL,ViewFlipper viewFlipper,ImageButton preBtn, ImageButton nextBtn) {
+
+        List<SliderItem> imageSliderList = new ArrayList<>();
+
+        mRequestQueue.getCache().clear();
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("items");
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject responseObj = jsonArray.getJSONObject(i);
+                        String image = responseObj.getString("image");
+                        String action = responseObj.getString("action");
+                        imageSliderList.add(new SliderItem(image,action));
+                    }
+                    Log.d("imageSliderList", String.valueOf(imageSliderList.size()));
+
+                    ImageSliderAdapter adapter = new ImageSliderAdapter(MainActivity.this, viewFlipper, imageSliderList);
+                    adapter.loadImages();
+
+                    // Initialize GestureDetector
+//                    mGestureDetector = new GestureDetector(MainActivity.this, new SwipeGestureListener());
+                    preBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewFlipper.showPrevious();
+                            stopAutoFlipping();
+                        }
+                    });
+
+                    nextBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewFlipper.showNext();
+                            stopAutoFlipping();
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mRequestQueue.add(request);
+
+    }
+    // Method to stop the automatic flipping
+    private void stopAutoFlipping() {
+        viewFlipper.stopFlipping();
+        viewFlipperCover.stopFlipping();
+        viewFlipperCover1.stopFlipping();
+        viewFlipperCover2.stopFlipping();
+    }
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return mGestureDetector.onTouchEvent(event);
+//    }
+//
+//    private class SwipeGestureListener extends GestureDetector.SimpleOnGestureListener {
+//
+//        private static final int SWIPE_THRESHOLD = 100;
+//        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+//
+//        @Override
+//        public boolean onDown(MotionEvent event) {
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+//            float diffX = event2.getX() - event1.getX();
+//            float diffY = event2.getY() - event1.getY();
+//
+//            if (Math.abs(diffX) > Math.abs(diffY) &&
+//                    Math.abs(diffX) > SWIPE_THRESHOLD &&
+//                    Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+//                if (diffX > 0) {
+//                    viewFlipper.showPrevious();
+//                } else {
+//                    viewFlipper.showNext();
+//                }
+//                return true;
+//            }
+//            return false;
+//        }
+//    }
+//    private void fetchImagesFromApi() {
+//        mRequestQueue.getCache().clear();
+//        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
+//
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+//
+//        List<SliderImageModel> slideModels = new ArrayList<>();
+//
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try {
+//                    JSONArray jsonArray = response.getJSONArray("items");
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject hit = jsonArray.getJSONObject(i);
+//                        slideModels.add(new SliderImageModel(hit.get("image").toString()
+//                                ,hit.get("action").toString()));
+//                    }
+//
+//                    ImagePagerAdapter adapter = new ImagePagerAdapter(MainActivity.this,slideModels);
+//                    viewPager.setAdapter(adapter);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//            }
+//        });
+//        mRequestQueue.add(request);
+//    }
+
+    private void setFavoriteCount(){
+        int favoriteItemCount = favoriteDB.favoriteDAO().getAllFavorites().size();
+        favoriteCount = findViewById(R.id.favoriteCount);
+        if(favoriteItemCount<9){
+            favoriteCount.setText(String.valueOf(favoriteItemCount));
+        }else{
+            favoriteCount.setText("9+");
+        }
     }
 
     public void showCustomDialog() {
@@ -173,18 +447,20 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_layout, null);
 
         categorySpinner = dialogView.findViewById(R.id.category_spinner);
-        brandSpinner = dialogView.findViewById(R.id.brand_spinner);
         genderSpinner = dialogView.findViewById(R.id.gender_spinner);
         priceSpinner = dialogView.findViewById(R.id.price_spinner);
-
+        dialogAmount = dialogView.findViewById(R.id.dialog_amount);
+        String noSelection = "None" ;
         List<String> categoryNameList = categoryDb.categoryDAO().getAllCategoryName();
+        categoryNameList.add(0,noSelection);
 
-        List<String> brandNameList = brandDB.brandDAO().getAllBrandName();
+//        List<String> brandNameList = brandDB.brandDAO().getAllBrandName();
+//        brandNameList.add(noSelection);
 
-        ArrayAdapter<String> brandArrayAdapter = new ArrayAdapter<>(this,
-                R.layout.spinner_layout, brandNameList);
+//        ArrayAdapter<String> brandArrayAdapter = new ArrayAdapter<>(this,
+//                R.layout.spinner_layout, brandNameList);
 
-        brandArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        brandArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ArrayAdapter<String> categoryArrayAdapter = new ArrayAdapter<>(this,
                 R.layout.spinner_layout, categoryNameList);
@@ -207,11 +483,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Apply the adapter to the spinner.
         categorySpinner.setAdapter(categoryArrayAdapter);
-        brandSpinner.setAdapter(brandArrayAdapter);
         genderSpinner.setAdapter(genderArrayAdapter);
         priceSpinner.setAdapter(priceArrayAdapter);
+        priceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedValue = (String) parentView.getItemAtPosition(position);
 
-        // Create the dialog
+                // Assuming you want to show the EditText when a specific value is selected
+                if (!selectedValue.equals(noSelection)) {
+                    dialogAmount.setVisibility(View.VISIBLE);
+                } else {
+                    dialogAmount.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Handle case where nothing is selected
+            }
+        });
+            // Create the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
@@ -225,6 +517,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button searchButton = dialogView.findViewById(R.id.search_dialog_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the selected value from spinner1
+                String categorySpinnerValue = categorySpinner.getSelectedItem().toString();
+
+                // Get the selected value from spinner2
+                String genderSpinnerValue = genderSpinner.getSelectedItem().toString();
+
+                // Get the selected value from spinner3
+                String priceSpinnerValue = priceSpinner.getSelectedItem().toString();
+
+                String enteredAmount = dialogAmount.getText().toString();
+
+                if(!priceSpinnerValue.equals(noSelection)){
+                    if(TextUtils.isEmpty(dialogAmount.getText())){
+                        dialogAmount.setError("Enter the field");
+                        return;
+                    }
+                }
+
+                Intent intent = new Intent(MainActivity.this, FilterPage.class);
+                intent.putExtra("categoryValue", categorySpinnerValue);
+                intent.putExtra("genderValue", genderSpinnerValue);
+                intent.putExtra("amountType", priceSpinnerValue);
+                intent.putExtra("enteredAmount", enteredAmount);
+                MainActivity.this.startActivity(intent);
+
+            }
+        });
+
         // Show the dialog
         dialog.show();
     }
@@ -234,11 +558,74 @@ public class MainActivity extends AppCompatActivity {
         featureProductList.clear();
 
         featureProductList = productDb.mainDao().getAllFeatureProduct();
+        List<Product> featureList = new ArrayList<>();
+        featureList = featureProductList.subList(0,featureProductList.size()/3);
         Collections.shuffle(featureProductList);
+        Collections.shuffle(featureList);
         FeatureProductAdapter adapter = new FeatureProductAdapter
-                (MainActivity.this, featureProductList);
+                (MainActivity.this, featureList);
         featureProductRecyclerView.setAdapter(adapter);
+        showProductV1(featureProductList);
     }
+
+    private void showProductV1(List<Product> featureProductList) {
+        Log.d("Product", "Show Product1 Called");
+        int startIndex = featureProductList.size() / 3;
+        int endIndex = (2 * featureProductList.size()) / 3;
+        if (featureProductList.size() > 3) {
+            // Calculate start and end indices for the sublist
+
+            // Get the sublist
+            List<Product> featureList = featureProductList.subList(startIndex, endIndex);
+
+            // Shuffle the sublist
+            Collections.shuffle(featureList);
+
+            // Set up the adapter with the shuffled sublist
+            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureList);
+            featureProductRecyclerView1.setAdapter(adapter);
+        } else {
+            List<Product> featureList = featureProductList.subList(endIndex, featureProductList.size());
+
+            // If the list size is 3 or less, shuffle the original list
+            Collections.shuffle(featureProductList);
+
+            // Set up the adapter with the shuffled original list
+            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureProductList);
+            featureProductRecyclerView1.setAdapter(adapter);
+        }
+        showProductV2(featureProductList);
+    }
+
+
+    private void showProductV2(List<Product> featureProductList) {
+        Log.d("Product", "Show Product2 Called");
+        int startIndex = (2 * featureProductList.size()) / 3;
+        if (featureProductList.size() > 3) {
+            // Calculate start and end indices for the sublist
+
+
+            // Get the sublist
+            List<Product> featureList = featureProductList.subList(startIndex, featureProductList.size());
+
+            // Shuffle the sublist
+            Collections.shuffle(featureList);
+
+            // Set up the adapter with the shuffled sublist
+            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureList);
+            featureProductRecyclerView2.setAdapter(adapter);
+        } else {
+            List<Product> featureList = featureProductList.subList(startIndex, featureProductList.size());
+
+            // If the list size is 3 or less, shuffle the original list
+            Collections.shuffle(featureList);
+
+            // Set up the adapter with the shuffled original list
+            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureList);
+            featureProductRecyclerView2.setAdapter(adapter);
+        }
+    }
+
 
     private void parseBrandJson(){
         mRequestQueue.getCache().clear();
@@ -391,8 +778,8 @@ public class MainActivity extends AppCompatActivity {
         brandNameList.clear();
 
         List<Brand> brandList = brandDB.brandDAO().getAllBrand();
-        brandList = brandList.subList(0,brandList.size()/2);
         Collections.shuffle(brandList);
+        brandList = brandList.subList(0,6);
         for(Brand b:brandList){
             brandNameList.add(b.getName());
             brandImageList.add(b.getImage());
@@ -499,6 +886,7 @@ public class MainActivity extends AppCompatActivity {
             String country = responseObj.getString("country");
             String images = responseObj.getString("images");
             String category = responseObj.getString("category");
+            String gender = responseObj.getString("gender");
             String subCategory = responseObj.getString("subCategory");
             String featured = responseObj.getString("featured");
             String rating = responseObj.getString("ratings");
@@ -506,7 +894,7 @@ public class MainActivity extends AppCompatActivity {
             String brand = responseObj.getString("brand");
             Gson gson = new Gson();
             productList.add(new Product(id,title,description,price,link,country,images
-                    ,category,subCategory,featured,rating,occasion,brand,createdAt));
+                    ,category,gender,subCategory,featured,rating,occasion,brand,createdAt));
         }
 
         for(Product p:productList){
@@ -517,6 +905,20 @@ public class MainActivity extends AppCompatActivity {
 //                    mRecyclerView.setAdapter(mProductAdapter);
 //                    mProductAdapter.setOnItemClickListener(ShowAllProduct.this);
 //                    findViewById(R.id.gridLoading).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+            doublePressBack();
+    }
+
+    public void doublePressBack(){
+        if (pressedTime + 3000 > System.currentTimeMillis()) {
+            finish();
+        } else {
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
     }
 
 }

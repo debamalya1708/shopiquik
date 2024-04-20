@@ -30,7 +30,6 @@ public class ProductDescription extends AppCompatActivity {
 
     String productId;
     private RoomDB productDb;
-    private FavoriteDB favoriteDB;
 
     TextView productTitle, productDetails, productBrand, productAmazonPrice,productBrandPrice,
             productRating,productLikes, productPriceBrand,similarCategoryItem;
@@ -39,6 +38,10 @@ public class ProductDescription extends AppCompatActivity {
     ImageView productImage, shareProductAmazon,shareOtherBrandProduct;
     private List<Product> featureProductList = new ArrayList<>();
     private RecyclerView searchProductRecyclerView;
+    private TextView favoriteCount;
+    private FavoriteDB favoriteDB;
+    private ImageView infoIcon, favIcon,homeIcon;
+
 
     private ImageView favoriteButton;
 
@@ -65,10 +68,10 @@ public class ProductDescription extends AppCompatActivity {
         similarCategoryItem = findViewById(R.id.similarItem);
 //        DescriptionProductPrice.setPaintFlags(DescriptionProductPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         productLikes = findViewById(R.id.text_view_product_popular);
-
         productDb=RoomDB.getInstance(this);
         favoriteDB = FavoriteDB.getInstance(this);
         List<Integer> favoriteList = favoriteDB.favoriteDAO().getAllFavorites();
+        setFavoriteCount();
         Intent intent = getIntent();
         searchProductRecyclerView = findViewById(R.id.feature_product_recyclerView);
         searchProductRecyclerView.setHasFixedSize(true);
@@ -99,6 +102,7 @@ public class ProductDescription extends AppCompatActivity {
                     favoriteDB.favoriteDAO().delete(removeFavorite);
                     favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24); // Change to your filled favorite icon
                     Toast.makeText(ProductDescription.this,"Removed from Fav",Toast.LENGTH_SHORT).show();
+                    setFavoriteCount();
                 }
                 else{
                     Favorite addFavorite = new Favorite();
@@ -106,11 +110,40 @@ public class ProductDescription extends AppCompatActivity {
                     favoriteDB.favoriteDAO().insert(addFavorite);
                     favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24); // Change to your filled favorite icon
                     Toast.makeText(ProductDescription.this,"Added to Fav",Toast.LENGTH_SHORT).show();
-
+                    setFavoriteCount();
                 }
             }
         });
+        favIcon = findViewById(R.id.favIconV2);
 
+
+        favIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDescription.this, FavoriteProducts.class);
+                ProductDescription.this.startActivity(intent);
+            }
+        });
+
+        infoIcon = findViewById(R.id.infoIconV2);
+
+        infoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDescription.this, MoreActivity.class);
+                ProductDescription.this.startActivity(intent);
+            }
+        });
+
+        homeIcon= findViewById(R.id.homeIconV2);
+
+        homeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDescription.this, MainActivity.class);
+                ProductDescription.this.startActivity(intent);
+            }
+        });
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -119,9 +152,20 @@ public class ProductDescription extends AppCompatActivity {
                 // For example, fetch new data from a network request
                 // Once the refresh is complete, call setRefreshing(false) to stop the animation
                 showProduct(productId);
+                setFavoriteCount();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+    private void setFavoriteCount(){
+        int favoriteItemCount = favoriteDB.favoriteDAO().getAllFavorites().size();
+        favoriteCount = findViewById(R.id.favoriteCount);
+        if(favoriteItemCount<9){
+            favoriteCount.setText(String.valueOf(favoriteItemCount));
+        }else{
+            favoriteCount.setText("9+");
+        }
     }
 
     private void similarCategoryProduct(String productId,String productCategory) {

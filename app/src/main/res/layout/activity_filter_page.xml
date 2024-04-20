@@ -9,135 +9,169 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/all_toolbar" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
 
     <LinearLayout
-        android:id="@+id/dropdowns_main_container"
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:background="@color/teal_200"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- Dropdowns Container -->
-        <LinearLayout
-            android:id="@+id/first_dropdowns_container"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/categoryNameView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:background="@color/teal_200"
-            android:orientation="horizontal"
-            android:padding="8dp">
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/average_sans"
+            android:gravity="start"
+            android:layout_marginStart="5dp"
+            android:text="Look what you have searched..."
+            android:textSize="18sp"
+            android:textColor="#8C8C8C"/>
 
-            <!-- First Dropdown and Label -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Category" />
-
-                <Spinner
-                    android:id="@+id/spinner1"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <!-- Second Dropdown and Label -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Brand" />
-
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/second_dropdowns_container"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filter_product_recyclerView"
+            android:layout_marginVertical="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:background="@color/teal_200"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <!-- Third Dropdown and Label -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Gender" />
-
-                <Spinner
-                    android:id="@+id/spinner3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <!-- Forth Dropdown and Label -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Price" />
-
-                <Spinner
-                    android:id="@+id/spinner4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/dropdowns_main_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_below="@+id/toolbar"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:background="@color/teal_200"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="8dp">-->
+
+<!--        &lt;!&ndash; Dropdowns Container &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:id="@+id/first_dropdowns_container"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:background="@color/teal_200"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="8dp">-->
+
+<!--            &lt;!&ndash; First Dropdown and Label &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:text="Category" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/spinner1"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:gravity="center_horizontal"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content" />-->
+
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash; Second Dropdown and Label &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:text="Brand" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/spinner2"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:gravity="center_horizontal"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content" />-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/second_dropdowns_container"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:background="@color/teal_200"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="8dp">-->
+
+<!--            &lt;!&ndash; Third Dropdown and Label &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:text="Gender" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/spinner3"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content" />-->
+
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash; Forth Dropdown and Label &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:text="Price" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/spinner4"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content" />-->
+
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
+
+<!--    </LinearLayout>-->
+
 
 
 </RelativeLayout>

@@ -5,8 +5,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +22,8 @@ public class FavoriteProducts extends AppCompatActivity {
     private FavoriteDB favoriteDB;
     private RoomDB productDb;
     private RecyclerView favoriteProductRecyclerView;
+    private ImageView infoIcon,homeIcon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,26 @@ public class FavoriteProducts extends AppCompatActivity {
         favoriteProductRecyclerView.setHasFixedSize(true);
         favoriteProductRecyclerView.setLayoutManager(new GridLayoutManager(FavoriteProducts.this,2));
         getAllFavourite();
+
+        infoIcon = findViewById(R.id.infoIconV2);
+
+        infoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FavoriteProducts.this, MoreActivity.class);
+                FavoriteProducts.this.startActivity(intent);
+            }
+        });
+
+        homeIcon= findViewById(R.id.homeIconV2);
+
+        homeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FavoriteProducts.this, MainActivity.class);
+                FavoriteProducts.this.startActivity(intent);
+            }
+        });
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

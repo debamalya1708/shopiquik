@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        layout="@layout/all_toolbar" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
@@ -36,7 +36,7 @@
                 android:id="@+id/text_view_productName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/average_sans"
                 android:layout_marginVertical="2dp"
                 android:text="Mens Black &amp; Grey Checked Pure Cotton Casual Shirt"
                 android:textColor="@color/black"
@@ -100,7 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif"
+                        android:fontFamily="@font/average_sans"
                         android:text="Amazon"
                         android:textColor="#A8A8A8"
                         android:textSize="18sp" />
@@ -110,7 +110,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif"
+                        android:fontFamily="@font/average_sans"
                         android:text="MRP ₹ 9,999"
                         android:textColor="#111"
                         android:textSize="18sp" />
@@ -123,7 +123,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
                     android:text="Buy Now"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/average_sans"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     android:elevation="5dp"
@@ -164,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif"
+                        android:fontFamily="@font/average_sans"
                         android:text="boAt"
                         android:textColor="#A8A8A8"
                         android:textSize="18sp" />
@@ -174,7 +174,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif"
+                        android:fontFamily="@font/average_sans"
                         android:text="MRP ₹ 7,999"
                         android:textColor="#111"
                         android:textSize="18sp" />
@@ -187,7 +187,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
                     android:text="Buy Now"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/average_sans"
                     android:textSize="16dp"
                     android:elevation="5dp"
                     android:textStyle="bold"
@@ -213,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/average_sans"
                 android:text="Price will be updated in every 24 Hours"
                 android:textColor="#C5C5C5"
                 android:textSize="12sp" />
@@ -238,7 +238,7 @@
                     android:id="@+id/text_view_productRating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/average_sans"
                     android:text="4.5 ★"
                     android:layout_weight="1"
                     android:textColor="@color/colorAccent"
@@ -249,7 +249,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/average_sans"
                     android:gravity="center"
                     android:text="boAt"
                     android:textColor="#000000"
@@ -268,7 +268,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif"
+                        android:fontFamily="@font/average_sans"
                         android:gravity="end"
                         android:text="55.6k+"
                         android:textColor="@color/black"
@@ -294,7 +294,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/average_sans"
                 android:text="Product Details"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -306,7 +306,7 @@
                 android:id="@+id/text_view_productDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/average_sans"
                 android:padding="8dp"
                 android:layout_marginVertical="5dp"
                 android:background="@drawable/product_view_price"
@@ -324,7 +324,7 @@
                 android:id="@+id/similarItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/average_sans"
                 android:text="More From Similar Category"
                 android:textColor="@color/black"
                 android:textSize="18sp"

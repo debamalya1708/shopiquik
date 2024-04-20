@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +26,11 @@ public class SearchProduct extends AppCompatActivity {
     private TextView appBarName;
     private List<Product> featureProductList = new ArrayList<>();
     private RoomDB productDb;
+    private FavoriteDB favoriteDB;
     private RecyclerView searchProductRecyclerView;
+    private TextView favoriteCount;
+    private ImageView infoIcon, favIcon,homeIcon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,39 @@ public class SearchProduct extends AppCompatActivity {
 
         productDb=RoomDB.getInstance(this);
         appBarName = findViewById(R.id.appBarTitle);
+
+        favoriteDB = FavoriteDB.getInstance(this);
+        setFavoriteCount();
+
+        favIcon = findViewById(R.id.favIconV2);
+
+        favIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchProduct.this, FavoriteProducts.class);
+                SearchProduct.this.startActivity(intent);
+            }
+        });
+
+        infoIcon = findViewById(R.id.infoIconV2);
+
+        infoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchProduct.this, MoreActivity.class);
+                SearchProduct.this.startActivity(intent);
+            }
+        });
+
+        homeIcon= findViewById(R.id.homeIconV2);
+
+        homeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchProduct.this, MainActivity.class);
+                SearchProduct.this.startActivity(intent);
+            }
+        });
         Intent intent = getIntent();
         if(intent.getStringExtra("Event") != null){
             event = intent.getStringExtra("Event");
@@ -55,6 +93,18 @@ public class SearchProduct extends AppCompatActivity {
         showProduct(searchItem);
 
     }
+
+
+    private void setFavoriteCount(){
+        int favoriteItemCount = favoriteDB.favoriteDAO().getAllFavorites().size();
+        favoriteCount = findViewById(R.id.favoriteCount);
+        if(favoriteItemCount<9){
+            favoriteCount.setText(String.valueOf(favoriteItemCount));
+        }else{
+            favoriteCount.setText("9+");
+        }
+    }
+
 
     private void showProduct(String searchItem) {
         String newSearchTerm = "%"+searchItem+"%";

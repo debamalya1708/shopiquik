@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Get The Product You Want"
+        android:fontFamily="@font/average_sans"
         android:textSize="20sp"
         android:textColor="#111"
         android:padding="16dp"
@@ -41,7 +42,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/average_sans"
                     android:layout_marginBottom="5dp"
                     android:text="Category" />
 
@@ -54,33 +56,80 @@
 
             </LinearLayout>
 
-            <!-- Second Dropdown and Label -->
-            <LinearLayout
-                android:layout_width="match_parent"
+        <!-- Forth Dropdown and Label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/dropdown_dialog_backgroud"
+            android:layout_marginVertical="5dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/dropdown_dialog_backgroud"
-                android:layout_marginVertical="5dp"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="10dp"
-                android:orientation="vertical">
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:fontFamily="@font/average_sans"
+                android:layout_marginBottom="5dp"
+                android:text="Price" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Brand" />
+            <Spinner
+                android:id="@+id/price_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                <Spinner
-                    android:id="@+id/brand_spinner"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/dialog_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/searchbar"
+                android:fontFamily="sans-serif"
+                android:hint="Enter amount..."
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textColorHint="#757575"
+                android:imeOptions="actionSearch"
+                android:inputType="number"
+                android:lines="1"
+                android:layout_marginTop="10dp"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:textStyle="normal" />
 
-            </LinearLayout>
+
+        </LinearLayout>
+
+            <!-- Second Dropdown and Label -->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/dropdown_dialog_backgroud"-->
+<!--                android:layout_marginVertical="5dp"-->
+<!--                android:paddingHorizontal="10dp"-->
+<!--                android:paddingVertical="10dp"-->
+<!--                android:orientation="vertical">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:layout_marginBottom="5dp"-->
+<!--                    android:text="Brand" />-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/brand_spinner"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:gravity="center_horizontal"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content" />-->
+
+<!--            </LinearLayout>-->
 
             <!-- Third Dropdown and Label -->
             <LinearLayout
@@ -97,7 +146,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/average_sans"
                     android:layout_marginBottom="5dp"
                     android:text="Gender" />
 
@@ -108,37 +158,13 @@
 
             </LinearLayout>
 
-            <!-- Forth Dropdown and Label -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/dropdown_dialog_backgroud"
-                android:layout_marginVertical="5dp"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="5dp"
-                    android:text="Price" />
-
-                <Spinner
-                    android:id="@+id/price_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
 
         <Button
             android:id="@+id/search_dialog_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Search"
+            android:fontFamily="@font/average_sans"
             android:layout_marginVertical="10dp"
             android:textColor="#111"
             android:gravity="center"

@@ -3,10 +3,13 @@ package com.debamalya.shopapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,6 +52,13 @@ public class HomeCategoryHorizontalRecyclerView extends
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale_up);
+                view.startAnimation(anim);
+                view.startAnimation(anim);
+                Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                if (vibrator != null) {
+                    vibrator.vibrate(50); // Vibrate for 100 milliseconds
+                }
 //                String act = categoryNames.get(position);
 
                 if (currentItem.equals("")) {

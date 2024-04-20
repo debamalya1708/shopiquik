@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -109,6 +111,9 @@ public class AllCategoryHorizontalRecyclerView extends
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale_up);
+                view.startAnimation(anim);
 //                String CategoryName = CategoryImages.get(position);
 
                 if (CategoryName.equals("")) {

@@ -2,9 +2,12 @@ package com.debamalya.shopapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -118,6 +121,12 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.mFavoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.scale_up);
+                v.startAnimation(anim);
+                Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
+                if (vibrator != null) {
+                    vibrator.vibrate(50); // Vibrate for 100 milliseconds
+                }
                 Favorite favorite = favoriteDB.favoriteDAO().getFavoriteByProductId(Integer.parseInt(productId));
                 if(favorite!=null){
                     Favorite removeFavorite = new Favorite();
@@ -133,7 +142,6 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
                     favoriteDB.favoriteDAO().insert(addFavorite);
                     holder.mFavoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24); // Change to your filled favorite icon
                     Toast.makeText(mContext,"Added to Fav",Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -141,6 +149,8 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.scale_up);
+                view.startAnimation(anim);
                 //Toast.makeText(mcontext,"Click",Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(mContext, ProductDescription.class);
