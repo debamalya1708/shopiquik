@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.TextUtils;
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<CharSequence> genderArrayAdapter,priceArrayAdapter;
     private long pressedTime;
     private TextView favoriteCount;
-    private ViewFlipper viewFlipper,viewFlipperCover,viewFlipperCover1,viewFlipperCover2;
+    private ViewFlipper viewFlipper1,viewFlipperCover,viewFlipperCover1,viewFlipperCover2;
     private ImageButton mBtnPrevious,btn_previousCover,btn_previousCover1,btn_previousCover2;
     private ImageButton mBtnNext,btn_nextCover,btn_nextCover1,btn_nextCover2;
 
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
         categoryRecyclerView = findViewById(R.id.category_recyclerView);
 
-        viewFlipper = findViewById(R.id.viewFlipper);
+        viewFlipper1 = findViewById(R.id.viewFlipper1);
         viewFlipperCover = findViewById(R.id.viewFlipperCover);
         viewFlipperCover1 = findViewById(R.id.viewFlipperCover1);
         viewFlipperCover2 = findViewById(R.id.viewFlipperCover2);
@@ -283,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFeatureFlipper(){
         String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
-        setFeaturedImageSlider(URL,viewFlipper,mBtnPrevious,mBtnNext);
+        setFeaturedImageSlider(URL,viewFlipper1,mBtnPrevious,mBtnNext);
     }
 
     private void setViewFlipperCover(){
@@ -357,7 +358,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // Method to stop the automatic flipping
     private void stopAutoFlipping() {
-        viewFlipper.stopFlipping();
+        viewFlipper1.stopFlipping();
         viewFlipperCover.stopFlipping();
         viewFlipperCover1.stopFlipping();
         viewFlipperCover2.stopFlipping();
@@ -776,10 +777,10 @@ public class MainActivity extends AppCompatActivity {
 
         brandImageList.clear();
         brandNameList.clear();
-
+        int lastIndex = 6;
         List<Brand> brandList = brandDB.brandDAO().getAllBrand();
         Collections.shuffle(brandList);
-        brandList = brandList.subList(0,6);
+        brandList = brandList.subList(0,Math.min(brandList.size(), lastIndex));
         for(Brand b:brandList){
             brandNameList.add(b.getName());
             brandImageList.add(b.getImage());

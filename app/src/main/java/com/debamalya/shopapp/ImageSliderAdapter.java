@@ -37,6 +37,9 @@ public class ImageSliderAdapter{
             Glide.with(mContext)
                     .load(imageUrl.getImage())
                     .into(imageView);
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
