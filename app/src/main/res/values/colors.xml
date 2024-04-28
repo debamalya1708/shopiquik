@@ -3,13 +3,13 @@
     <color name="purple_200">#FFF</color>
     <color name="purple_500">#FFF</color>
     <color name="purple_700">#FFF</color>
-    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_200">#49243E</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#fff</color>
     <color name="colorDialogBoxSpinner">#F1F1F1</color>
-    <color name="colorPrimaryDark">#FF03DAC5</color>
+    <color name="colorPrimaryDark">#49243E</color>
     <color name="colorAccentDuplicate">#ff003c</color>
     <color name="colorAccent">#ff003c</color>
     <color name ="statusbar">#ffffff</color>
@@ -17,3 +17,7 @@
     <color name="darkGrey">#605E5E</color>
     <color name="transparent">#00000000</color>
 </resources>
+
+<!--    FF03DAC5-->
+<!--    3C0753-->
+<!--    451952-->

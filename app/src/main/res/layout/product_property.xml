@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background = "@color/white"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:background="@drawable/product_view_price"
+        android:padding="8dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="2dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/product_market_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/average_sans"
+                android:text="Amazon"
+                android:textColor="#A8A8A8"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/market_place_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/average_sans"
+                android:text="MRP ₹ 9,999"
+                android:textColor="#111"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buy_product"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:text="Buy Now"
+            android:fontFamily="@font/average_sans"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:elevation="5dp"
+            android:textAllCaps="false"
+            android:background="@drawable/button_buy_now"/>
+        <ImageView
+            android:id="@+id/shareProduct"
+            android:layout_width="40dp"
+            android:layout_marginHorizontal="2dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/share_background"
+            android:elevation="5dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_baseline_share_24"
+            app:tint="@color/colorPrimary" />
+
+    </LinearLayout>
+
+</LinearLayout>

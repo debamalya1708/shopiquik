@@ -166,7 +166,7 @@
             android:text="Search"
             android:fontFamily="@font/average_sans"
             android:layout_marginVertical="10dp"
-            android:textColor="#111"
+            android:textColor="#FFF"
             android:gravity="center"
             android:textSize="18sp"
             android:textAllCaps="false"

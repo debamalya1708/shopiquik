@@ -2,6 +2,7 @@ package com.debamalya.shopapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -26,6 +27,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
 public class ProductDescription extends AppCompatActivity {
 
     String productId;
@@ -37,7 +42,7 @@ public class ProductDescription extends AppCompatActivity {
     Button buyButtonAmazon,buyProductBrand;
     ImageView productImage, shareProductAmazon,shareOtherBrandProduct;
     private List<Product> featureProductList = new ArrayList<>();
-    private RecyclerView searchProductRecyclerView;
+    private RecyclerView searchProductRecyclerView , productPropertyRecyclerView;
     private TextView favoriteCount;
     private FavoriteDB favoriteDB;
     private ImageView infoIcon, favIcon,homeIcon;
@@ -53,30 +58,34 @@ public class ProductDescription extends AppCompatActivity {
 
         setContentView(R.layout.activity_product_description);
         favoriteButton = findViewById(R.id.favorite_button);
-        productPriceBrand = findViewById(R.id.text_view_product_price_brand);
+//        productPriceBrand = findViewById(R.id.text_view_product_price_brand);
         productTitle = findViewById(R.id.text_view_productName);
         productDetails = findViewById(R.id.text_view_productDesc);
         productBrand = findViewById(R.id.text_view_productBrand);
-        productAmazonPrice = findViewById(R.id.text_view_product_price_amazon);
-        productBrandPrice = findViewById(R.id.text_view_product_price);
+//        productAmazonPrice = findViewById(R.id.text_view_product_price_amazon);
+//        productBrandPrice = findViewById(R.id.text_view_product_price);
         productRating = findViewById(R.id.text_view_productRating);
         productImage = findViewById(R.id.product_Image_detail);
-        buyButtonAmazon = findViewById(R.id.buyProduct_amazon);
-        buyProductBrand = findViewById(R.id.buyProduct_brand);
-        shareProductAmazon = findViewById(R.id.shareProduct_amazon);
-        shareOtherBrandProduct = findViewById(R.id.shareOtherBrandProduct);
+//        buyButtonAmazon = findViewById(R.id.buyProduct_amazon);
+//        buyProductBrand = findViewById(R.id.buyProduct_brand);
+//        shareProductAmazon = findViewById(R.id.shareProduct_amazon);
+//        shareOtherBrandProduct = findViewById(R.id.shareOtherBrandProduct);
         similarCategoryItem = findViewById(R.id.similarItem);
 //        DescriptionProductPrice.setPaintFlags(DescriptionProductPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         productLikes = findViewById(R.id.text_view_product_popular);
         productDb=RoomDB.getInstance(this);
         favoriteDB = FavoriteDB.getInstance(this);
         List<Integer> favoriteList = favoriteDB.favoriteDAO().getAllFavorites();
-        setFavoriteCount();
+//        setFavoriteCount();
         Intent intent = getIntent();
         searchProductRecyclerView = findViewById(R.id.feature_product_recyclerView);
         searchProductRecyclerView.setHasFixedSize(true);
         searchProductRecyclerView.setLayoutManager(new GridLayoutManager
                 (ProductDescription.this,2));
+
+        productPropertyRecyclerView = findViewById(R.id.product_property_recyclerView);
+        productPropertyRecyclerView.setLayoutManager(new LinearLayoutManager(ProductDescription.this));
+
 
         if(intent.getStringExtra("productId") != null){
             Log.d("Product ID",intent.getStringExtra("productId"));
@@ -102,7 +111,7 @@ public class ProductDescription extends AppCompatActivity {
                     favoriteDB.favoriteDAO().delete(removeFavorite);
                     favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24); // Change to your filled favorite icon
                     Toast.makeText(ProductDescription.this,"Removed from Fav",Toast.LENGTH_SHORT).show();
-                    setFavoriteCount();
+//                    setFavoriteCount();
                 }
                 else{
                     Favorite addFavorite = new Favorite();
@@ -110,7 +119,7 @@ public class ProductDescription extends AppCompatActivity {
                     favoriteDB.favoriteDAO().insert(addFavorite);
                     favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24); // Change to your filled favorite icon
                     Toast.makeText(ProductDescription.this,"Added to Fav",Toast.LENGTH_SHORT).show();
-                    setFavoriteCount();
+//                    setFavoriteCount();
                 }
             }
         });
@@ -152,21 +161,21 @@ public class ProductDescription extends AppCompatActivity {
                 // For example, fetch new data from a network request
                 // Once the refresh is complete, call setRefreshing(false) to stop the animation
                 showProduct(productId);
-                setFavoriteCount();
+//                setFavoriteCount();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
-    private void setFavoriteCount(){
-        int favoriteItemCount = favoriteDB.favoriteDAO().getAllFavorites().size();
-        favoriteCount = findViewById(R.id.favoriteCount);
-        if(favoriteItemCount<9){
-            favoriteCount.setText(String.valueOf(favoriteItemCount));
-        }else{
-            favoriteCount.setText("9+");
-        }
-    }
+//    private void setFavoriteCount(){
+//        int favoriteItemCount = favoriteDB.favoriteDAO().getAllFavorites().size();
+//        favoriteCount = findViewById(R.id.favoriteCount);
+//        if(favoriteItemCount<9){
+//            favoriteCount.setText(String.valueOf(favoriteItemCount));
+//        }else{
+//            favoriteCount.setText("9+");
+//        }
+//    }
 
     private void similarCategoryProduct(String productId,String productCategory) {
 
@@ -187,29 +196,66 @@ public class ProductDescription extends AppCompatActivity {
         Optional<Product> product = productDb.mainDao().getProduct(id);
         if(product.isPresent()){
             productTitle.setText(product.get().getTitle());
-            productPriceBrand.setText(product.get().getBrand());
+//            productPriceBrand.setText(product.get().getBrand());
             Glide.with(ProductDescription.this).load(product.get().getImages()).into(productImage);
             productDetails.setText(product.get().getDescription());
             productBrand.setText(product.get().getBrand());
 
             // Parse JSON string to object
             Gson gson = new Gson();
-            Price price;
+            String priceListString;
+            String linkListString;
 
-            //TODO for check price for every brand, if not exists then have to hide the layout
-            if(!product.get().getPrice().equals("")){
-                price =  gson.fromJson(product.get().getPrice(), Price.class);
-                String formattedAmazonPrice="";
-                String formattedBrandPrice ="";
-                if(!price.getAmazon().equals(""))
-                formattedAmazonPrice = formatPrice(price.getAmazon());
+            ArrayList<Price> priceList = new ArrayList<>();
+            ArrayList<Link> linkList = new ArrayList<>();
 
-                if(!price.getOther().equals(""))
-                formattedBrandPrice = formatPrice(price.getOther());
+            List<ProductProperty> productPropertyList = new ArrayList<>();
+            priceListString = product.get().getPrice();
+            linkListString = product.get().getLink();
 
-                productAmazonPrice.setText("MRP ₹ "+formattedAmazonPrice);
-                productBrandPrice.setText("MRP ₹ "+formattedBrandPrice);
+            if(!product.get().getPrice().equals("") && !product.get().getLink().equals("")){
+                // Define the type of the target data structure using TypeToken
+                Type listType = new TypeToken<ArrayList<Price>>() {}.getType();
+                // Convert the JSON string to an ArrayList of Item objects
+                priceList = gson.fromJson(priceListString, listType);
+
+                Type link_listType = new TypeToken<ArrayList<Link>>() {}.getType();
+                // Convert the JSON string to an ArrayList of Item objects
+                linkList = gson.fromJson(linkListString, link_listType);
+
+//                priceList = gson.fromJson(product.get().getPrice(), ParentPrice.class);
+//                linkList = gson.fromJson(product.get().getLink(), ParentLink.class);
+
+                int size=priceList.size();
+                int ind=0;
+                while(size>0){
+                    String price = priceList.get(ind).getMarketPlacePrice();
+                    String marketPlaceName = priceList.get(ind).getMarketPlaceName();
+                    String link = linkList.get(ind).getMarketPlaceLink();
+                    ProductProperty productProperty = new ProductProperty(price,marketPlaceName,link);
+                    productPropertyList.add(productProperty);
+                    size--;
+                    ind++;
+                }
+                ProductPropertyAdapter adapter = new ProductPropertyAdapter
+                        (ProductDescription.this, productPropertyList);
+                productPropertyRecyclerView.setAdapter(adapter);
             }
+//
+//            if(!product.get().getPrice().equals("")){
+//                for(Price p:product.get().getPrice())
+//                price =  gson.fromJson(product.get().getPrice(), Price.class);
+//                String formattedAmazonPrice="";
+//                String formattedBrandPrice ="";
+//                if(!price.getAmazon().equals(""))
+//                formattedAmazonPrice = formatPrice(price.getAmazon());
+//
+//                if(!price.getOther().equals(""))
+//                formattedBrandPrice = formatPrice(price.getOther());
+//
+//                productAmazonPrice.setText("MRP ₹ "+formattedAmazonPrice);
+//                productBrandPrice.setText("MRP ₹ "+formattedBrandPrice);
+//            }
 
             productRating.setText(product.get().getRating()+" ★");
 
@@ -220,69 +266,69 @@ public class ProductDescription extends AppCompatActivity {
             int randomNumber = random.nextInt(81) + 20;
             productLikes.setText(randomNumber +"K+");
 
-            Link link;
-            String buyAmazonLink = "";
-            if(!product.get().getLink().equals("")){
-                link =  gson.fromJson(product.get().getLink(), Link.class);
-                buyAmazonLink = link.getAmazon();
-            }
-            String finalBuyAmazonLink = buyAmazonLink;
-            if(!finalBuyAmazonLink.equals(""))
-            buyButtonAmazon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                    intent.setData(Uri.parse(finalBuyAmazonLink));
-                    startActivity(intent);
-                }
-            });
-
-            String buyOtherBrandLink = "";
-            if(!product.get().getLink().equals("")){
-                link =  gson.fromJson(product.get().getLink(), Link.class);
-                buyOtherBrandLink = link.getOther();
-            }
-            String finalBuyOtherLink = buyOtherBrandLink;
-
-            if(!finalBuyOtherLink.equals(""))
-            buyProductBrand.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                    intent.setData(Uri.parse(finalBuyOtherLink));
-                    startActivity(intent);
-                }
-            });
-
-            if(!finalBuyAmazonLink.equals(""))
-            shareProductAmazon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent shareIntent = new Intent();
-                    String shareMssg = product.get().getTitle()+"\n\n"+finalBuyAmazonLink;
-                    shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.putExtra(Intent.EXTRA_TEXT,shareMssg+"\n\n");
-                    shareIntent.setType("text/plain");
-                    startActivity(Intent.createChooser(shareIntent,"Share via"));
-                }
-            });
-
-            if(!finalBuyOtherLink.equals(""))
-            shareOtherBrandProduct.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent shareIntent = new Intent();
-                    String shareMssg = product.get().getTitle()+"\n\n"+finalBuyOtherLink;
-                    shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.putExtra(Intent.EXTRA_TEXT,shareMssg+"\n\n");
-                    shareIntent.setType("text/plain");
-                    startActivity(Intent.createChooser(shareIntent,"Share via"));
-                }
-            });
+//            Link link;
+//            String buyAmazonLink = "";
+//            if(!product.get().getLink().equals("")){
+//                link =  gson.fromJson(product.get().getLink(), Link.class);
+//                buyAmazonLink = link.getAmazon();
+//            }
+//            String finalBuyAmazonLink = buyAmazonLink;
+//            if(!finalBuyAmazonLink.equals(""))
+//            buyButtonAmazon.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent intent = new Intent();
+//                    intent.setAction(Intent.ACTION_VIEW);
+//                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+//                    intent.setData(Uri.parse(finalBuyAmazonLink));
+//                    startActivity(intent);
+//                }
+//            });
+//
+//            String buyOtherBrandLink = "";
+//            if(!product.get().getLink().equals("")){
+//                link =  gson.fromJson(product.get().getLink(), Link.class);
+//                buyOtherBrandLink = link.getOther();
+//            }
+//            String finalBuyOtherLink = buyOtherBrandLink;
+//
+//            if(!finalBuyOtherLink.equals(""))
+//            buyProductBrand.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent intent = new Intent();
+//                    intent.setAction(Intent.ACTION_VIEW);
+//                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+//                    intent.setData(Uri.parse(finalBuyOtherLink));
+//                    startActivity(intent);
+//                }
+//            });
+//
+//            if(!finalBuyAmazonLink.equals(""))
+//            shareProductAmazon.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent shareIntent = new Intent();
+//                    String shareMssg = product.get().getTitle()+"\n\n"+finalBuyAmazonLink;
+//                    shareIntent.setAction(Intent.ACTION_SEND);
+//                    shareIntent.putExtra(Intent.EXTRA_TEXT,shareMssg+"\n\n");
+//                    shareIntent.setType("text/plain");
+//                    startActivity(Intent.createChooser(shareIntent,"Share via"));
+//                }
+//            });
+//
+//            if(!finalBuyOtherLink.equals(""))
+//            shareOtherBrandProduct.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent shareIntent = new Intent();
+//                    String shareMssg = product.get().getTitle()+"\n\n"+finalBuyOtherLink;
+//                    shareIntent.setAction(Intent.ACTION_SEND);
+//                    shareIntent.putExtra(Intent.EXTRA_TEXT,shareMssg+"\n\n");
+//                    shareIntent.setType("text/plain");
+//                    startActivity(Intent.createChooser(shareIntent,"Share via"));
+//                }
+//            });
 
             similarCategoryItem.setText("More From "+ productCategory+" Category");
             similarCategoryProduct(productId,productCategory);

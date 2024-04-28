@@ -26,10 +26,19 @@ tools:context=".MainActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/searchlayout"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingHorizontal="10dp"
             android:paddingVertical="10dp">
 
+            <LinearLayout
+                android:id="@+id/categoryGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/searchlayout"
+                android:orientation="horizontal"
+                android:paddingHorizontal="0dp"
+                android:paddingBottom="0dp"
+                android:paddingTop="0dp">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/category_recyclerView"
                 android:layout_marginVertical="10dp"
@@ -44,13 +53,15 @@ tools:context=".MainActivity">
                 android:layout_height="30dp"
                 android:layout_gravity="center|center_horizontal"
                 android:layout_weight="1"
-                android:layout_marginHorizontal="5dp"
-                android:background="@drawable/ic_baseline_arrow_circle_right_24"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/ic_baseline_window_24"
                 android:pointerIcon="grab"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/black"
                 android:textColorHint="#9C9B9B"
                 android:textStyle="normal" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -77,7 +88,7 @@ tools:context=".MainActivity">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_margin="10dp"
         app:cardCornerRadius="8dp">
 
         <RelativeLayout
@@ -89,7 +100,7 @@ tools:context=".MainActivity">
             <ViewFlipper
                 android:id="@+id/viewFlipper1"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="190dp"
                 android:autoStart="true">
 
             </ViewFlipper>
@@ -103,8 +114,8 @@ tools:context=".MainActivity">
                 android:layout_alignBottom="@id/viewFlipper1"
                 android:background="@null"
                 android:padding="8dp"
-                android:src="@drawable/ic_baseline_arrow_circle_left_24"
-                android:tint="@color/teal_200" />
+                android:src="@drawable/left_rewind"
+                android:tint="@color/darkGrey" />
 
             <ImageButton
                 android:id="@+id/btn_next"
@@ -112,11 +123,11 @@ tools:context=".MainActivity">
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/viewFlipper1"
                 android:layout_alignEnd="@id/viewFlipper1"
-                android:padding="8dp"
                 android:layout_alignBottom="@id/viewFlipper1"
                 android:background="@null"
-                android:src="@drawable/slider_right_arrow"
-                android:tint="@color/teal_200" />
+                android:padding="8dp"
+                android:src="@drawable/right_forward"
+                android:tint="@color/darkGrey" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
@@ -241,20 +252,20 @@ tools:context=".MainActivity">
                 android:layout_alignBottom="@id/viewFlipperCover"
                 android:background="@null"
                 android:padding="8dp"
-                android:src="@drawable/ic_baseline_arrow_circle_left_24"
-                android:tint="@color/teal_200" />
+                android:src="@drawable/left_rewind"
+                android:tint="@color/darkGrey" />
 
             <ImageButton
                 android:id="@+id/btn_nextCover"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/viewFlipperCover"
-                android:layout_alignBottom="@id/viewFlipperCover"
                 android:layout_alignEnd="@id/viewFlipperCover"
+                android:layout_alignBottom="@id/viewFlipperCover"
                 android:background="@null"
                 android:padding="8dp"
-                android:src="@drawable/slider_right_arrow"
-                android:tint="@color/teal_200" />
+                android:src="@drawable/right_forward"
+                android:tint="@color/darkGrey" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
@@ -307,8 +318,8 @@ tools:context=".MainActivity">
                 android:layout_alignBottom="@id/viewFlipperCover1"
                 android:background="@null"
                 android:padding="8dp"
-                android:src="@drawable/ic_baseline_arrow_circle_left_24"
-                android:tint="@color/teal_200" />
+                android:src="@drawable/left_rewind"
+                android:tint="@color/darkGrey" />
 
             <ImageButton
                 android:id="@+id/btn_nextCover1"
@@ -319,8 +330,8 @@ tools:context=".MainActivity">
                 android:layout_alignEnd="@id/viewFlipperCover1"
                 android:background="@null"
                 android:padding="8dp"
-                android:src="@drawable/slider_right_arrow"
-                android:tint="@color/teal_200" />
+                android:src="@drawable/right_forward"
+                android:tint="@color/darkGrey" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
@@ -359,8 +370,8 @@ tools:context=".MainActivity">
                 android:layout_alignStart="@id/viewFlipperCover2"
                 android:background="@null"
                 android:padding="8dp"
-                android:src="@drawable/ic_baseline_arrow_circle_left_24"
-                android:tint="@color/teal_200" />
+                android:src="@drawable/left_rewind"
+                android:tint="@color/darkGrey" />
 
             <ImageButton
                 android:id="@+id/btn_nextCover2"
@@ -371,8 +382,8 @@ tools:context=".MainActivity">
                 android:layout_alignEnd="@id/viewFlipperCover2"
                 android:background="@null"
                 android:padding="8dp"
-                android:src="@drawable/slider_right_arrow"
-                android:tint="@color/teal_200" />
+                android:src="@drawable/right_forward"
+                android:tint="@color/darkGrey" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

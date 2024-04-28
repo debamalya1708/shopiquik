@@ -41,10 +41,9 @@ public class SearchProduct extends AppCompatActivity {
         appBarName = findViewById(R.id.appBarTitle);
 
         favoriteDB = FavoriteDB.getInstance(this);
-        setFavoriteCount();
+//        setFavoriteCount();
 
         favIcon = findViewById(R.id.favIconV2);
-
         favIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +53,6 @@ public class SearchProduct extends AppCompatActivity {
         });
 
         infoIcon = findViewById(R.id.infoIconV2);
-
         infoIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +62,6 @@ public class SearchProduct extends AppCompatActivity {
         });
 
         homeIcon= findViewById(R.id.homeIconV2);
-
         homeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,20 +69,18 @@ public class SearchProduct extends AppCompatActivity {
                 SearchProduct.this.startActivity(intent);
             }
         });
+
         Intent intent = getIntent();
         if(intent.getStringExtra("Event") != null){
             event = intent.getStringExtra("Event");
-        }
-        else{
+        } else{
             Toast.makeText(SearchProduct.this, "Choose Brand or Category", Toast.LENGTH_SHORT).show();
-
         }
         if(intent.getStringExtra("SearchItem") != null){
             searchItem = intent.getStringExtra("SearchItem");
-            appBarName.setText(searchItem);
-        }
-        else {
-            Toast.makeText(SearchProduct.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+//            appBarName.setText(searchItem);
+        } else {
+            Toast.makeText(SearchProduct.this, "Select One Brand or Category", Toast.LENGTH_SHORT).show();
         }
         searchProductRecyclerView = findViewById(R.id.search_product_recyclerView);
         searchProductRecyclerView.setHasFixedSize(true);
@@ -95,15 +90,15 @@ public class SearchProduct extends AppCompatActivity {
     }
 
 
-    private void setFavoriteCount(){
-        int favoriteItemCount = favoriteDB.favoriteDAO().getAllFavorites().size();
-        favoriteCount = findViewById(R.id.favoriteCount);
-        if(favoriteItemCount<9){
-            favoriteCount.setText(String.valueOf(favoriteItemCount));
-        }else{
-            favoriteCount.setText("9+");
-        }
-    }
+//    private void setFavoriteCount(){
+//        int favoriteItemCount = favoriteDB.favoriteDAO().getAllFavorites().size();
+//        favoriteCount = findViewById(R.id.favoriteCount);
+//        if(favoriteItemCount<9){
+//            favoriteCount.setText(String.valueOf(favoriteItemCount));
+//        }else{
+//            favoriteCount.setText("9+");
+//        }
+//    }
 
 
     private void showProduct(String searchItem) {
@@ -116,6 +111,9 @@ public class SearchProduct extends AppCompatActivity {
         }
         else if(event.equals("Brand")){
             featureProductList = productDb.mainDao().getAllProductByBrand(newSearchTerm);
+            Collections.shuffle(featureProductList);
+        }else if(event.equals("Global")){
+            featureProductList = productDb.mainDao().searchProduct(newSearchTerm);
             Collections.shuffle(featureProductList);
         }
         searchProductRecyclerView.setAdapter(new FeatureProductAdapter

@@ -10,9 +10,9 @@
 
     <ImageView
         android:id="@+id/splash_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/splash"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/shopiv1logo"
         android:textColor="#111111"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"

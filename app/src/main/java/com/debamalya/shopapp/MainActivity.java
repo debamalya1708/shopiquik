@@ -1,22 +1,31 @@
 package com.debamalya.shopapp;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,6 +41,7 @@ import android.widget.ViewFlipper;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
@@ -84,20 +94,27 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> brandImageList = new ArrayList<>();
     private TextView viewAllBrands;
     private ImageView infoIcon, favIcon;
-    private EditText dialogAmount;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private EditText dialogAmount,searchInput;
     private FloatingActionButton floatingActionButton;
     private Spinner categorySpinner, genderSpinner,priceSpinner;
     private ArrayAdapter<CharSequence> genderArrayAdapter,priceArrayAdapter;
     private long pressedTime;
     private TextView favoriteCount;
     private ViewFlipper viewFlipper1,viewFlipperCover,viewFlipperCover1,viewFlipperCover2;
-    private ImageButton mBtnPrevious,btn_previousCover,btn_previousCover1,btn_previousCover2;
+    private ImageButton mBtnPrevious,btn_previousCover,btn_previousCover1,btn_previousCover2,searchProduct;
     private ImageButton mBtnNext,btn_nextCover,btn_nextCover1,btn_nextCover2;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private NestedScrollView nestedScrollView;
     private Button fabButton;
+    private LinearLayout searchLayout;
+    private TextView appTitle;
+    ImageView searchButton,removeIcon;
+
     private int lastScrollY = 0;
+
+    private Animation fadeInAnimation;
+    private Animation fadeOutAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
         viewFlipperCover = findViewById(R.id.viewFlipperCover);
         viewFlipperCover1 = findViewById(R.id.viewFlipperCover1);
         viewFlipperCover2 = findViewById(R.id.viewFlipperCover2);
+        searchProduct = findViewById(R.id.searchProduct);
+        searchInput = findViewById(R.id.searchInput);
 
         mBtnPrevious = findViewById(R.id.btn_previous);
         mBtnNext = findViewById(R.id.btn_next);
@@ -164,10 +183,36 @@ public class MainActivity extends AppCompatActivity {
         btn_previousCover2 = findViewById(R.id.btn_previousCover2);
         btn_nextCover2 = findViewById(R.id.btn_nextCover2);
 
-
         viewAllBrands = findViewById(R.id.viewAllBrands);
 
         allCategoryButton = findViewById(R.id.allCategoryButton);
+
+        searchProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchText = searchInput.getText().toString();
+                Intent intent = new Intent(MainActivity.this, SearchProduct.class);
+                intent.putExtra("SearchItem", searchText);
+                intent.putExtra("Event", "Global");
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
+        searchInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    // Perform your search or any other action here
+                    String searchText = searchInput.getText().toString();
+                    Intent intent = new Intent(MainActivity.this, SearchProduct.class);
+                    intent.putExtra("SearchItem", searchText);
+                    intent.putExtra("Event", "Global");
+                    MainActivity.this.startActivity(intent);
+                    return true; // Return true to indicate you've handled the action
+                }
+                return false; // Return false to let the system handle the action
+            }
+        });
 
         floatingActionButton = findViewById(R.id.filter_fab_Icon);
 
@@ -280,6 +325,63 @@ public class MainActivity extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+
+        searchLayout = findViewById(R.id.searchLayout);
+        appTitle = findViewById(R.id.appBarTitle);
+
+        searchButton = findViewById(R.id.search_Icon);
+        removeIcon = findViewById(R.id.remove_Icon);
+        // Load animations
+        fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        removeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleSearchView();
+            }
+        });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleSearchView();
+            }
+        });
+    }
+
+    private void toggleSearchView() {
+        if (appTitle.getVisibility() == View.VISIBLE) {
+            appTitle.setVisibility(View.GONE);
+            searchLayout.setVisibility(View.VISIBLE);
+            searchButton.setVisibility(View.GONE);
+            removeIcon.setVisibility(View.VISIBLE);
+            favIcon.setVisibility(View.GONE);
+            infoIcon.setVisibility(View.GONE);
+            // Fade in search view
+            removeIcon.setVisibility(View.VISIBLE);
+//            removeIcon.startAnimation(fadeInAnimation);
+
+            searchLayout.setVisibility(View.VISIBLE);
+//            searchLayout.startAnimation(fadeInAnimation);
+        } else {
+            appTitle.setVisibility(View.VISIBLE);
+            searchLayout.setVisibility(View.GONE);
+            searchButton.setVisibility(View.VISIBLE);
+            removeIcon.setVisibility(View.GONE);
+            favIcon.setVisibility(View.VISIBLE);
+            infoIcon.setVisibility(View.VISIBLE);
+
+            appTitle.setVisibility(View.VISIBLE);
+            appTitle.startAnimation(fadeInAnimation);
+
+            searchButton.setVisibility(View.VISIBLE);
+            searchButton.startAnimation(fadeInAnimation);
+
+            favIcon.setVisibility(View.VISIBLE);
+            favIcon.startAnimation(fadeInAnimation);
+
+            infoIcon.setVisibility(View.VISIBLE);
+            infoIcon.startAnimation(fadeInAnimation);
+        }
     }
 
     private void setFeatureFlipper(){

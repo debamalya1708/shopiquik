@@ -16,6 +16,11 @@
     <string-array name="category_array"></string-array>
 
     <string-array name="brand_array"></string-array>
+    <string name="tagline_text">ShopiQuik, Be Quick, Be Faster!</string>
+    <string name="about_ShopiQuik">Struggling to find the perfect presents? Leave that to us.\nUse ShopiQuik to find the perfect gifts for your loved ones based on their personality, occasion and your budget.</string>
+
+    <string name="how_it_works">ShopiQuik is a Made in India App developed to make choosing gifts easier for you. Having a hard time finding a perfect gift for your loved ones? We are here to help you. We help you find the best gifts that they will love based on advanced recommendation systems.</string>
+
 
 
     <string name="category_name">Select Category</string>

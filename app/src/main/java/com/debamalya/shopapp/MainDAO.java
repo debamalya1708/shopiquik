@@ -38,6 +38,9 @@ public interface MainDAO {
     @Query("SELECT * FROM product WHERE brand LIKE :value ")
     List<Product> getAllProductByBrand(String value);
 
+    @Query("SELECT * FROM product WHERE title LIKE :value OR description LIKE :value OR occasion LIKE :value")
+    List<Product> searchProduct(String value);
+
     @Query("SELECT * FROM product WHERE id = :value ")
     Optional<Product> getProduct(int value);
 

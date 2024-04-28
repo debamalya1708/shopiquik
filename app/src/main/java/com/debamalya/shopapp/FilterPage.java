@@ -173,8 +173,11 @@ public class FilterPage extends AppCompatActivity {
                 Gson gson = new Gson();
                 Price productPrice = gson.fromJson(String.valueOf(priceJson), Price.class);
 
-                double amazonPrice = Double.parseDouble(productPrice.getAmazon());
-                double otherPrice = Double.parseDouble(productPrice.getOther());
+//                double amazonPrice = Double.parseDouble(productPrice.getAmazon());
+//                double otherPrice = Double.parseDouble(productPrice.getOther());
+
+                double amazonPrice = Double.parseDouble("5333");
+                double otherPrice = Double.parseDouble("89767");
 
                 if(amountType.equals("Above")){
                         if ((category.isEmpty() || product.getCategory().equals(category)) &&

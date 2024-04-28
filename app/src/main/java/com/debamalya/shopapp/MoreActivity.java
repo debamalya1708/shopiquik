@@ -43,5 +43,14 @@ public class MoreActivity extends AppCompatActivity {
             }
         });
 
+        aboutLayout = findViewById(R.id.aboutLayout);
+        aboutLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MoreActivity.this, AboutUs.class);
+                MoreActivity.this.startActivity(intent);
+            }
+        });
+
     }
 }
