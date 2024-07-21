@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -973,7 +974,7 @@ public class MainActivity extends AppCompatActivity {
     private void insertProduct(JSONArray jsonArray,String createdAt) throws JSONException {
         for(int i=0;i<jsonArray.length();i++){
             JSONObject responseObj = jsonArray.getJSONObject(i);
-            int id = Integer.parseInt(responseObj.getString("id"));
+            String id = responseObj.getString("id");
             String title = responseObj.getString("title");
             String description = responseObj.getString("description");
             String price = responseObj.getString("price");

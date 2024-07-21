@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +25,8 @@ public class FavoriteProducts extends AppCompatActivity {
     private RoomDB productDb;
     private RecyclerView favoriteProductRecyclerView;
     private ImageView infoIcon,homeIcon;
+    private LinearLayout layout;
+    private TextView textView;
 
 
     @Override
@@ -75,11 +79,11 @@ public class FavoriteProducts extends AppCompatActivity {
 //        showProducts(favList);
 //    }
 
-    private void showProducts(List<Integer> favList) {
+    private void showProducts(List<String> favList) {
         List<Product> searchProductList = new ArrayList<>();
 
         Log.d("Product","Show Product Called");
-        for (int i:favList){
+        for (String i:favList){
             Optional<Product> product = productDb.mainDao().getProduct(i);
             searchProductList.add(product.get());
         }
@@ -92,7 +96,13 @@ public class FavoriteProducts extends AppCompatActivity {
     }
 
     public void getAllFavourite(){
-        List<Integer> favoriteList = favoriteDB.favoriteDAO().getAllFavorites();
+        List<String> favoriteList = favoriteDB.favoriteDAO().getAllFavorites();
+        if(favoriteList.size()==0){
+            layout = findViewById(R.id.emptyCartContainer);
+            textView = findViewById(R.id.categoryNameView);
+            layout.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.INVISIBLE);
+        }
         if (favoriteList.size()>0)
             showProducts(favoriteList);
     }

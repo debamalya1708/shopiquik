@@ -47,6 +47,9 @@ public class ProductDescription extends AppCompatActivity {
     private FavoriteDB favoriteDB;
     private ImageView infoIcon, favIcon,homeIcon;
 
+    private Button viewMoreButton;
+    private boolean isExpanded = false;
+
 
     private ImageView favoriteButton;
 
@@ -73,9 +76,35 @@ public class ProductDescription extends AppCompatActivity {
         similarCategoryItem = findViewById(R.id.similarItem);
 //        DescriptionProductPrice.setPaintFlags(DescriptionProductPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
         productLikes = findViewById(R.id.text_view_product_popular);
+
+
+        viewMoreButton = findViewById(R.id.btn_view_more);
+
+        // Set initial visibility of full text to GONE
+        productDetails.setMaxLines(4);  // Show only 2 lines initially
+        viewMoreButton.setVisibility(View.VISIBLE);  // Show "View More" button initially
+
+        // Set click listener for "View More" button
+        viewMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isExpanded) {
+                    // Collapse the text
+                    productDetails.setMaxLines(4);  // Show only 2 lines
+                    viewMoreButton.setText("View More");
+                } else {
+                    // Expand the text
+                    productDetails.setMaxLines(Integer.MAX_VALUE);  // Show all lines
+                    viewMoreButton.setText("View Less");
+                }
+                isExpanded = !isExpanded;  // Toggle the state
+            }
+        });
+
+
         productDb=RoomDB.getInstance(this);
         favoriteDB = FavoriteDB.getInstance(this);
-        List<Integer> favoriteList = favoriteDB.favoriteDAO().getAllFavorites();
+        List<String> favoriteList = favoriteDB.favoriteDAO().getAllFavorites();
 //        setFavoriteCount();
         Intent intent = getIntent();
         searchProductRecyclerView = findViewById(R.id.feature_product_recyclerView);
@@ -96,17 +125,17 @@ public class ProductDescription extends AppCompatActivity {
             Toast.makeText(ProductDescription.this, "Coming Soon", Toast.LENGTH_SHORT).show();
         }
 
-        if(favoriteList.contains(Integer.parseInt(productId))){
+        if(favoriteList.contains(productId)){
             favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24); // Change to your filled favorite icon
         }
 
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Favorite favorite = favoriteDB.favoriteDAO().getFavoriteByProductId(Integer.parseInt(productId));
+                Favorite favorite = favoriteDB.favoriteDAO().getFavoriteByProductId(productId);
                 if(favorite!=null){
                     Favorite removeFavorite = new Favorite();
-                    removeFavorite.setProductId(Integer.parseInt(productId));
+                    removeFavorite.setProductId(productId);
                     removeFavorite.setId(favorite.getId());
                     favoriteDB.favoriteDAO().delete(removeFavorite);
                     favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24); // Change to your filled favorite icon
@@ -115,7 +144,7 @@ public class ProductDescription extends AppCompatActivity {
                 }
                 else{
                     Favorite addFavorite = new Favorite();
-                    addFavorite.setProductId(Integer.parseInt(productId));
+                    addFavorite.setProductId(productId);
                     favoriteDB.favoriteDAO().insert(addFavorite);
                     favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24); // Change to your filled favorite icon
                     Toast.makeText(ProductDescription.this,"Added to Fav",Toast.LENGTH_SHORT).show();
@@ -184,7 +213,7 @@ public class ProductDescription extends AppCompatActivity {
 
         featureProductList = productDb.mainDao().getAllProductByCategory(newSearchTerm);
 
-        featureProductList.removeIf(p -> p.getId() == Integer.parseInt(productId));
+        featureProductList.removeIf(p -> p.getId() == productId);
         Collections.shuffle(featureProductList);
 
         searchProductRecyclerView.setAdapter(new FeatureProductAdapter
@@ -192,8 +221,8 @@ public class ProductDescription extends AppCompatActivity {
     }
 
     private void showProduct(String productId) {
-        int id = Integer.parseInt(productId);
-        Optional<Product> product = productDb.mainDao().getProduct(id);
+//        int id = Integer.parseInt(productId);
+        Optional<Product> product = productDb.mainDao().getProduct(productId);
         if(product.isPresent()){
             productTitle.setText(product.get().getTitle());
 //            productPriceBrand.setText(product.get().getBrand());

@@ -101,9 +101,9 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
 
         final Product currentItem = mFeatureProductList.get(position);
 
-        String productId = Integer.toString(currentItem.getId());
+        String productId = currentItem.getId();
         String imageUrl = currentItem.getImages();
-        String productName = currentItem.getTitle().substring(0,13);
+        String productName = currentItem.getTitle().substring(0,Math.min(13,currentItem.getTitle().length()));
         String productBrand = currentItem.getBrand();
 //        String productDescription = currentItem.getDescription().substring(0,10)+"...";
         String productRating = currentItem.getRating()+ " ★";
@@ -113,8 +113,8 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
 //        holder.mProductDescription.setText(productDescription);
         holder.mProductRating.setText(productRating);
         Glide.with(mContext).load(imageUrl).into(holder.mImageView);
-        List<Integer> favoriteList = getAllFavourite();
-        if(favoriteList.contains(Integer.parseInt(productId))){
+        List<String> favoriteList = getAllFavourite();
+        if(favoriteList.contains(productId)){
             holder.mFavoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24); // Change to your filled favorite icon
         }
 
@@ -127,10 +127,10 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
                 if (vibrator != null) {
                     vibrator.vibrate(50); // Vibrate for 100 milliseconds
                 }
-                Favorite favorite = favoriteDB.favoriteDAO().getFavoriteByProductId(Integer.parseInt(productId));
+                Favorite favorite = favoriteDB.favoriteDAO().getFavoriteByProductId(productId);
                 if(favorite!=null){
                     Favorite removeFavorite = new Favorite();
-                    removeFavorite.setProductId(Integer.parseInt(productId));
+                    removeFavorite.setProductId(productId);
                     removeFavorite.setId(favorite.getId());
                     favoriteDB.favoriteDAO().delete(removeFavorite);
                     holder.mFavoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24); // Change to your filled favorite icon
@@ -138,7 +138,7 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
                 }
                 else{
                     Favorite addFavorite = new Favorite();
-                    addFavorite.setProductId(Integer.parseInt(productId));
+                    addFavorite.setProductId(productId);
                     favoriteDB.favoriteDAO().insert(addFavorite);
                     holder.mFavoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24); // Change to your filled favorite icon
                     Toast.makeText(mContext,"Added to Fav",Toast.LENGTH_SHORT).show();
@@ -149,8 +149,8 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.scale_up);
-                view.startAnimation(anim);
+//                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.scale_up);
+//                view.startAnimation(anim);
                 //Toast.makeText(mcontext,"Click",Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(mContext, ProductDescription.class);
@@ -160,8 +160,8 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         });
     }
 
-    public List<Integer> getAllFavourite(){
-        List<Integer> favoriteList = favoriteDB.favoriteDAO().getAllFavorites();
+    public List<String> getAllFavourite(){
+        List<String> favoriteList = favoriteDB.favoriteDAO().getAllFavorites();
         if (favoriteList.size()>0)
             return favoriteList;
         return new ArrayList<>();

@@ -21,10 +21,10 @@ public interface FavoriteDAO {
     void reset(List<Favorite> allFavorites);
 
     @Query("SELECT productId FROM favorite")
-    List<Integer> getAllFavorites();
+    List<String> getAllFavorites();
 
     @Query("SELECT * FROM favorite where productId = :id")
-    Favorite getFavoriteByProductId(int id);
+    Favorite getFavoriteByProductId(String id);
 
 
 }

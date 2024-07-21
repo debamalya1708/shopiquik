@@ -191,7 +191,6 @@ tools:context=".MainActivity">
             android:layout_marginHorizontal="5dp"
             android:src="@drawable/male" />
 
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animationView"
             android:layout_width="match_parent"
@@ -211,17 +210,17 @@ tools:context=".MainActivity">
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:text="Top Products | Low Price | Be Quick, Be Faster"
-        android:fontFamily="@font/average_sans"
-        android:id="@+id/tag_line"
-        android:textAllCaps="true"
-        android:layout_marginVertical="5dp"
-        android:textColor="#B6B6B6"
-        android:layout_gravity="center"
-        android:textSize="14sp"/>
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="25dp"-->
+<!--        android:text="Top Products | Low Price | Be Quick, Be Faster"-->
+<!--        android:fontFamily="@font/average_sans"-->
+<!--        android:id="@+id/tag_line"-->
+<!--        android:textAllCaps="true"-->
+<!--        android:layout_marginVertical="5dp"-->
+<!--        android:textColor="#B6B6B6"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:textSize="14sp"/>-->
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

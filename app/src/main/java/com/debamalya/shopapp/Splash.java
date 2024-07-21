@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 public class Splash extends AppCompatActivity {
 
-    private long splash_time = 2000;
+    private long splash_time = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

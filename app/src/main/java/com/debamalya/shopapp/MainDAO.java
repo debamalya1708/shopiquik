@@ -42,7 +42,7 @@ public interface MainDAO {
     List<Product> searchProduct(String value);
 
     @Query("SELECT * FROM product WHERE id = :value ")
-    Optional<Product> getProduct(int value);
+    Optional<Product> getProduct(String value);
 
 //    @Query("SELECT * FROM product WHERE category = :category AND gender = :gender AND price->>'$.amazon' <= 6500 OR price->>'$.other'<= 6500")
 //    List<Product> getAllFilterProducts(String category,String gender,String price);

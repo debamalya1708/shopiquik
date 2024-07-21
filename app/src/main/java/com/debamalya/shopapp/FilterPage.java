@@ -16,13 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FilterPage extends AppCompatActivity {
     private RoomDB productDb;
@@ -168,33 +171,38 @@ public class FilterPage extends AppCompatActivity {
 
         for (Product product : products) {
             try {
-                JSONObject priceJson = new JSONObject(product.getPrice());
+                String marketPlacePrice = product.getPrice();
 
                 Gson gson = new Gson();
-                Price productPrice = gson.fromJson(String.valueOf(priceJson), Price.class);
 
-//                double amazonPrice = Double.parseDouble(productPrice.getAmazon());
-//                double otherPrice = Double.parseDouble(productPrice.getOther());
+                // Parse the JSON string into an array of maps
+                HashMap<String, String>[] array = gson.fromJson(marketPlacePrice, HashMap[].class);
 
-                double amazonPrice = Double.parseDouble("5333");
-                double otherPrice = Double.parseDouble("89767");
+                // Print each map in the array
+                for (HashMap<String, String> map : array) {
 
-                if(amountType.equals("Above")){
+                    if(amountType.equals("Above")){
                         if ((category.isEmpty() || product.getCategory().equals(category)) &&
                                 (gender.isEmpty() || product.getGender().equals(gender)) &&
-                                ((price == -1) || (amazonPrice >= price || otherPrice >= price))) {
+                                ((price == -1) || (Double.parseDouble(map.get("marketPlacePrice")) >= price))) {
                             filteredProducts.add(product);
                         }
                     }
-                else{
-                    if ((category.isEmpty() || product.getCategory().equals(category)) &&
-                            (gender.isEmpty() || product.getGender().equals(gender)) &&
-                            ((price == -1) || (amazonPrice <= price || otherPrice <= price))) {
-                        filteredProducts.add(product);
+                    else{
+                        if ((category.isEmpty() || product.getCategory().equals(category)) &&
+                                (gender.isEmpty() || product.getGender().equals(gender)) &&
+                                ((price == -1) || (Double.parseDouble(map.get("marketPlacePrice")) <= price))) {
+                            filteredProducts.add(product);
+                        }
                     }
                 }
+//                Price productPrice = gson.fromJson(String.valueOf(priceJson), Price.class);
+//                double amazonPrice = Double.parseDouble(productPrice.getAmazon());
+//                double otherPrice = Double.parseDouble(productPrice.getOther());
 
-            } catch (JSONException e) {
+//                double amazonPrice = Double.parseDouble("5333");
+//                double otherPrice = Double.parseDouble("89767");
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

@@ -13,7 +13,7 @@ public class Favorite implements Serializable {
     private int Id;
 
     @ColumnInfo(name = "productId")
-    private int productId;
+    private String productId;
 
     public int getId() {
         return Id;
@@ -23,15 +23,15 @@ public class Favorite implements Serializable {
         Id = id;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
-    public Favorite(int productId) {
+    public Favorite(String productId) {
         this.productId = productId;
     }
 

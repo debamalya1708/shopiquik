@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 33
     buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "com.debamalya.shopapp"
         minSdk 26
-        targetSdk 30
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.code.gson:gson:2.8.8'
 
-    def lottieVersion = "3.4.0"
+    def lottieVersion = "6.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'

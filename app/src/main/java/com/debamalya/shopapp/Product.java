@@ -1,5 +1,6 @@
 package com.debamalya.shopapp;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -12,7 +13,8 @@ import java.io.Serializable;
 public class Product implements Serializable {
 
     @PrimaryKey()
-    private int Id;
+    @NonNull
+    private String Id;
 
     @ColumnInfo(name = "title")
     private String title;
@@ -64,11 +66,11 @@ public class Product implements Serializable {
     @ColumnInfo (name = "created_at")
     private String createdAt;
 
-    public int getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         Id = id;
     }
 
@@ -176,7 +178,7 @@ public class Product implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Product(int id, String title, String description, String price, String link,
+    public Product(String id, String title, String description, String price, String link,
                    String country, String images, String category, String gender, String subCategory,
                    String featured, String rating, String occasion, String brand, String createdAt) {
         Id = id;
