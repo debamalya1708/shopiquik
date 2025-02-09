@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -113,7 +114,13 @@ public class SearchProduct extends AppCompatActivity {
             featureProductList = productDb.mainDao().getAllProductByBrand(newSearchTerm);
             Collections.shuffle(featureProductList);
         }else if(event.equals("Global")){
-            featureProductList = productDb.mainDao().searchProduct(newSearchTerm);
+            newSearchTerm = searchItem;
+            String[] searchTerms = newSearchTerm.split(" ");
+            for(String term : searchTerms){
+                Log.d("searchTerm", term);
+                term = "%"+term+"%";
+                featureProductList.addAll(productDb.mainDao().searchProduct(term));
+            }
             Collections.shuffle(featureProductList);
         }
         searchProductRecyclerView.setAdapter(new FeatureProductAdapter

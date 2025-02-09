@@ -10,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeCategoryHorizontalRecyclerView extends
         RecyclerView.Adapter<HomeCategoryHorizontalRecyclerView.ViewHolder> {
@@ -52,13 +56,13 @@ public class HomeCategoryHorizontalRecyclerView extends
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale_up);
-                view.startAnimation(anim);
-                view.startAnimation(anim);
-                Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                if (vibrator != null) {
-                    vibrator.vibrate(50); // Vibrate for 100 milliseconds
-                }
+//                Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale_up);
+//                view.startAnimation(anim);
+//                view.startAnimation(anim);
+//                Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+//                if (vibrator != null) {
+//                    vibrator.vibrate(50); // Vibrate for 100 milliseconds
+//                }
 //                String act = categoryNames.get(position);
 
                 if (currentItem.equals("")) {
@@ -67,7 +71,7 @@ public class HomeCategoryHorizontalRecyclerView extends
 //                    context.startActivity(intent);
                 }
                 else {
-                    Intent intent = new Intent(context, SearchProduct.class);
+                    Intent intent = new Intent(context, SubCategoryProducts.class);
                     intent.putExtra("SearchItem", currentItem);
                     intent.putExtra("Event", "Category");
                     context.startActivity(intent);

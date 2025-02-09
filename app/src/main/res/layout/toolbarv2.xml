@@ -21,17 +21,17 @@
         android:padding="5dp"
         android:visibility="gone"
         android:src="@drawable/cancel"
-        app:tint="@color/white" />
+        app:tint="#FFF" />
 
 
     <TextView
+        android:id="@+id/appBarTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:fontFamily="@font/aref_ruqaa_bold"
-        android:text="ShopiQuik"
-        android:id="@+id/appBarTitle"
         android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:fontFamily="@font/battambang"
+        android:text="ShopiQuik"
         android:textColor="#FFF"
         android:textSize="35dp" />
 
@@ -100,7 +100,7 @@
         android:elevation="5dp"
         android:padding="5dp"
         android:src="@drawable/heart_unfilled_icon"
-        app:tint="@color/white" />
+        app:tint="#FFF" />
 
     <TextView
         android:id="@+id/favoriteCount"
@@ -111,7 +111,7 @@
         android:layout_margin="0dp"
         android:visibility="gone"
         android:padding="0dp"
-        android:textColor="@color/white"
+        android:textColor="#FFF"
         android:layout_marginLeft="0dp"/>
 
     <ImageView
@@ -123,7 +123,7 @@
         android:elevation="5dp"
         android:padding="5dp"
         android:src="@drawable/ic_outline_dashboard_24"
-        app:tint="@color/white" />
+        app:tint="#FFF" />
 
     <ImageView
         android:id="@+id/search_Icon"
@@ -135,7 +135,7 @@
         android:padding="5dp"
         android:layout_marginEnd="10dp"
         android:src="@drawable/ic_baseline_search_24"
-        app:tint="@color/white" />
+        app:tint="#FFF" />
 <!--    <ImageView-->
 <!--        android:id="@+id/homeIcon"-->
 <!--        android:layout_width="35dp"-->
@@ -146,7 +146,7 @@
 <!--        android:padding="5dp"-->
 <!--        android:layout_marginEnd="20dp"-->
 <!--        android:src="@drawable/ic_outline_home_24"-->
-<!--        app:tint="@color/white" />-->
+<!--        app:tint="#FFF" />-->
 
 </LinearLayout>
 

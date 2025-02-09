@@ -19,7 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -98,19 +102,22 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
     public void onBindViewHolder(@NonNull productViewHolder holder, int position) {
         // Initialize database instance
         favoriteDB = FavoriteDB.getInstance(mContext);
+        Gson gson = new Gson();
 
         final Product currentItem = mFeatureProductList.get(position);
 
         String productId = currentItem.getId();
         String imageUrl = currentItem.getImages();
-        String productName = currentItem.getTitle().substring(0,Math.min(13,currentItem.getTitle().length()));
+        String productName = currentItem.getTitle().substring(0,Math.min(14,currentItem.getTitle().length()));
         String productBrand = currentItem.getBrand();
-//        String productDescription = currentItem.getDescription().substring(0,10)+"...";
         String productRating = currentItem.getRating()+ " ★";
+        String productPrice = currentItem.getPrice();
 
+        Type listType = new TypeToken<ArrayList<Price>>() {}.getType();
+        ArrayList<Price> priceList = gson.fromJson(productPrice, listType);
         holder.mProductName.setText(productName);
         holder.mProductBrand.setText(productBrand);
-//        holder.mProductDescription.setText(productDescription);
+        holder.mProductPrice.setText("₹"+formatPrice(Double.toString(calculateMinPrice((priceList)))));
         holder.mProductRating.setText(productRating);
         Glide.with(mContext).load(imageUrl).into(holder.mImageView);
         List<String> favoriteList = getAllFavourite();
@@ -151,13 +158,36 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
             public void onClick(View view) {
 //                Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.scale_up);
 //                view.startAnimation(anim);
-                //Toast.makeText(mcontext,"Click",Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext,"Click",Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(mContext, ProductDescription.class);
                 intent.putExtra("productId", productId);
                 mContext.startActivity(intent);
             }
         });
+    }
+
+    private double calculateMinPrice(ArrayList<Price> priceList) {
+        double minPrice = Double.MAX_VALUE;
+        if (priceList.size()>0){
+            for(Price price:priceList){
+                if(!price.getMarketPlacePrice().equals("0"))
+                minPrice = Math.min(minPrice,Double.parseDouble(price.getMarketPlacePrice()));
+            }
+        }
+        return minPrice;
+    }
+
+    private String formatPrice(String price) {
+        double newPrice = Double.parseDouble(price);
+
+        // Create a DecimalFormat object with the pattern "#,###.##"
+        DecimalFormat formatter = new DecimalFormat("#,###.##");
+
+        // Format the price using the DecimalFormat object
+        String formattedPrice = formatter.format(newPrice);
+        // Print the formatted price
+        return formattedPrice;
     }
 
     public List<String> getAllFavourite(){
@@ -177,7 +207,7 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
         public ImageView mImageView;
         public TextView mProductName;
         public TextView mProductBrand;
-//        public TextView mProductDescription;
+        public TextView mProductPrice;
         public TextView mProductRating;
         private ImageButton mFavoriteButton;
 
@@ -187,7 +217,7 @@ public class FeatureProductAdapter extends RecyclerView.Adapter<FeatureProductAd
             mImageView = itemView.findViewById(R.id.product_image);
             mProductName = itemView.findViewById(R.id.product_title);
             mProductBrand = itemView.findViewById(R.id.product_brand);
-//            mProductDescription = itemView.findViewById(R.id.product_desc);
+            mProductPrice = itemView.findViewById(R.id.product_price);
             mProductRating = itemView.findViewById(R.id.product_rating);
             mFavoriteButton = itemView.findViewById(R.id.favorite_button);
 

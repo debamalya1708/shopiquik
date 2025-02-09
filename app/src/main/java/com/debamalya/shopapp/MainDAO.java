@@ -29,11 +29,17 @@ public interface MainDAO {
     @Query("SELECT * FROM product")
     List<Product> getAllProduct();
 
-    @Query("SELECT * FROM product WHERE featured LIKE '%yes%' ")
+    @Query("SELECT * FROM product WHERE featured LIKE '%Yes%' ")
     List<Product> getAllFeatureProduct();
 
     @Query("SELECT * FROM product WHERE category LIKE :value ")
     List<Product> getAllProductByCategory(String value);
+
+    @Query("SELECT * FROM product WHERE subCategory = :value AND category = :category")
+    List<Product> getAllProductBySubCategory(String value, String category);
+
+    @Query("SELECT * FROM product WHERE category LIKE :value AND gender = :gender")
+    List<Product> getAllProductByCategoryAndGender(String value, String gender);
 
     @Query("SELECT * FROM product WHERE brand LIKE :value ")
     List<Product> getAllProductByBrand(String value);
@@ -47,7 +53,7 @@ public interface MainDAO {
 //    @Query("SELECT * FROM product WHERE category = :category AND gender = :gender AND price->>'$.amazon' <= 6500 OR price->>'$.other'<= 6500")
 //    List<Product> getAllFilterProducts(String category,String gender,String price);
 
-    @Query("SELECT * FROM product where :column = :value")
+    @Query("SELECT * FROM product where :column LIKE :value")
     List<Product> getAllByColumnAndColumnValue(String column, String value);
 
 

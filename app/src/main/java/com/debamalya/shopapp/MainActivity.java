@@ -50,7 +50,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -58,6 +60,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -67,8 +71,11 @@ import org.json.JSONObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Brand> brandList = new ArrayList<>();
     private RoomDB productDb;
     private CategoryDB categoryDb;
+    private SubCategoryDB subCategoryDb;
     private FavoriteDB favoriteDB;
     private BrandDB brandDB;
     private ImageButton allCategoryButton;
@@ -87,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue mRequestQueue;
     LinearLayoutManager linearLayoutManager;
     private List<Category> categoryList = new ArrayList<>();
+    private List<SubCategory> subCategoryList = new ArrayList<>();
     private ArrayList<String> categoryNameList = new ArrayList<>();
     private ArrayList<Integer> categoryIdList = new ArrayList<>();
     GridLayoutManager gridLayoutManager;
@@ -116,15 +125,26 @@ public class MainActivity extends AppCompatActivity {
 
     private Animation fadeInAnimation;
     private Animation fadeOutAnimation;
+    private List<String> categories = Arrays.asList("Men", "Women", "Boys", "Girls");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+// Clear the cache and print result
+        boolean isCacheCleared = CacheCleaner.clearCache(this);
+        if (isCacheCleared) {
+            Log.d("Cache: ", "Cache cleared successfully.");
+        } else {
+            Log.d("Cache: ", "Failed to clear cache.");
+        }
         productDb=RoomDB.getInstance(this);
 
         categoryDb = CategoryDB.getInstance(this);
+
+        subCategoryDb = SubCategoryDB.getInstance(this);
 
         favoriteDB = FavoriteDB.getInstance(this);
 
@@ -157,6 +177,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        ViewPager2 viewPager = findViewById(R.id.viewPager);
+
+        TabPagerAdapter adapter = new TabPagerAdapter(this);
+        viewPager.setAdapter(adapter);
+
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) ->
+                tab.setText(categories.get(position))
+        ).attach();
+
+        tabLayout.getTabAt(0).select(); // Select first tab by default
 
         mRequestQueue = Volley.newRequestQueue(MainActivity.this);
 
@@ -167,8 +198,8 @@ public class MainActivity extends AppCompatActivity {
 
         viewFlipper1 = findViewById(R.id.viewFlipper1);
         viewFlipperCover = findViewById(R.id.viewFlipperCover);
-        viewFlipperCover1 = findViewById(R.id.viewFlipperCover1);
-        viewFlipperCover2 = findViewById(R.id.viewFlipperCover2);
+//        viewFlipperCover1 = findViewById(R.id.viewFlipperCover1);
+//        viewFlipperCover2 = findViewById(R.id.viewFlipperCover2);
         searchProduct = findViewById(R.id.searchProduct);
         searchInput = findViewById(R.id.searchInput);
 
@@ -178,11 +209,11 @@ public class MainActivity extends AppCompatActivity {
         btn_previousCover = findViewById(R.id.btn_previousCover);
         btn_nextCover = findViewById(R.id.btn_nextCover);
 
-        btn_previousCover1 = findViewById(R.id.btn_previousCover1);
-        btn_nextCover1 = findViewById(R.id.btn_nextCover1);
-
-        btn_previousCover2 = findViewById(R.id.btn_previousCover2);
-        btn_nextCover2 = findViewById(R.id.btn_nextCover2);
+//        btn_previousCover1 = findViewById(R.id.btn_previousCover1);
+//        btn_nextCover1 = findViewById(R.id.btn_nextCover1);
+//
+//        btn_previousCover2 = findViewById(R.id.btn_previousCover2);
+//        btn_nextCover2 = findViewById(R.id.btn_nextCover2);
 
         viewAllBrands = findViewById(R.id.viewAllBrands);
 
@@ -276,23 +307,25 @@ public class MainActivity extends AppCompatActivity {
 
         featureProductRecyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
 
-        featureProductRecyclerView1 = findViewById(R.id.feature_product_recyclerView1);
-
-        featureProductRecyclerView1.setHasFixedSize(true);
-
-        featureProductRecyclerView1.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
-
-        featureProductRecyclerView2 = findViewById(R.id.feature_product_recyclerView2);
-
-        featureProductRecyclerView2.setHasFixedSize(true);
-
-        featureProductRecyclerView2.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+//        featureProductRecyclerView1 = findViewById(R.id.feature_product_recyclerView1);
+//
+//        featureProductRecyclerView1.setHasFixedSize(true);
+//
+//        featureProductRecyclerView1.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+//
+//        featureProductRecyclerView2 = findViewById(R.id.feature_product_recyclerView2);
+//
+//        featureProductRecyclerView2.setHasFixedSize(true);
+//
+//        featureProductRecyclerView2.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
 
         parseProductJson();
         showProduct();
 
         parseCategoryJson();
         showCategory();
+
+        parseSubCategoryJson();
 
         parseBrandJson();
         showBrand();
@@ -301,8 +334,8 @@ public class MainActivity extends AppCompatActivity {
 
         setFeatureFlipper();
         setViewFlipperCover();
-        setViewFlipperCover1();
-        setViewFlipperCover2();
+//        setViewFlipperCover1();
+//        setViewFlipperCover2();
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 
@@ -312,17 +345,18 @@ public class MainActivity extends AppCompatActivity {
                 // Do your refresh logic here
                 // For example, fetch new data from a network request
                 // Once the refresh is complete, call setRefreshing(false) to stop the animation
-                parseProductJson();
-                parseCategoryJson();
-                parseBrandJson();
+//                parseProductJson();
+//                parseCategoryJson();
+//                parseSubCategoryJson();
+//                parseBrandJson();
                 showProduct();
                 showCategory();
                 showBrand();
                 setFavoriteCount();
                 setFeatureFlipper();
                 setViewFlipperCover();
-                setViewFlipperCover1();
-                setViewFlipperCover2();
+//                setViewFlipperCover1();
+//                setViewFlipperCover2();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -395,15 +429,15 @@ public class MainActivity extends AppCompatActivity {
         setFeaturedImageSlider(URL,viewFlipperCover,btn_previousCover,btn_nextCover);
     }
 
-    private void setViewFlipperCover1(){
-        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
-        setFeaturedImageSlider(URL,viewFlipperCover1,btn_previousCover1,btn_nextCover1);
-    }
-
-    private void setViewFlipperCover2(){
-        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
-        setFeaturedImageSlider(URL,viewFlipperCover2,btn_previousCover2,btn_nextCover2);
-    }
+//    private void setViewFlipperCover1(){
+//        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
+//        setFeaturedImageSlider(URL,viewFlipperCover1,btn_previousCover1,btn_nextCover1);
+//    }
+//
+//    private void setViewFlipperCover2(){
+//        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/image_albp25.json";
+//        setFeaturedImageSlider(URL,viewFlipperCover2,btn_previousCover2,btn_nextCover2);
+//    }
 
     private void setFeaturedImageSlider(String URL,ViewFlipper viewFlipper,ImageButton preBtn, ImageButton nextBtn) {
 
@@ -463,8 +497,8 @@ public class MainActivity extends AppCompatActivity {
     private void stopAutoFlipping() {
         viewFlipper1.stopFlipping();
         viewFlipperCover.stopFlipping();
-        viewFlipperCover1.stopFlipping();
-        viewFlipperCover2.stopFlipping();
+//        viewFlipperCover1.stopFlipping();
+//        viewFlipperCover2.stopFlipping();
     }
 
 //    @Override
@@ -663,78 +697,77 @@ public class MainActivity extends AppCompatActivity {
 
         featureProductList = productDb.mainDao().getAllFeatureProduct();
         List<Product> featureList = new ArrayList<>();
-        featureList = featureProductList.subList(0,featureProductList.size()/3);
+        featureProductList = featureProductList.subList(0,Math.min(featureProductList.size(),24));
         Collections.shuffle(featureProductList);
-        Collections.shuffle(featureList);
+//        Collections.shuffle(featureList);
         FeatureProductAdapter adapter = new FeatureProductAdapter
-                (MainActivity.this, featureList);
+                (MainActivity.this, featureProductList);
         featureProductRecyclerView.setAdapter(adapter);
-        showProductV1(featureProductList);
+//        showProductV1(featureProductList);
     }
 
-    private void showProductV1(List<Product> featureProductList) {
-        Log.d("Product", "Show Product1 Called");
-        int startIndex = featureProductList.size() / 3;
-        int endIndex = (2 * featureProductList.size()) / 3;
-        if (featureProductList.size() > 3) {
-            // Calculate start and end indices for the sublist
-
-            // Get the sublist
-            List<Product> featureList = featureProductList.subList(startIndex, endIndex);
-
-            // Shuffle the sublist
-            Collections.shuffle(featureList);
-
-            // Set up the adapter with the shuffled sublist
-            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureList);
-            featureProductRecyclerView1.setAdapter(adapter);
-        } else {
-            List<Product> featureList = featureProductList.subList(endIndex, featureProductList.size());
-
-            // If the list size is 3 or less, shuffle the original list
-            Collections.shuffle(featureProductList);
-
-            // Set up the adapter with the shuffled original list
-            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureProductList);
-            featureProductRecyclerView1.setAdapter(adapter);
-        }
-        showProductV2(featureProductList);
-    }
-
-
-    private void showProductV2(List<Product> featureProductList) {
-        Log.d("Product", "Show Product2 Called");
-        int startIndex = (2 * featureProductList.size()) / 3;
-        if (featureProductList.size() > 3) {
-            // Calculate start and end indices for the sublist
-
-
-            // Get the sublist
-            List<Product> featureList = featureProductList.subList(startIndex, featureProductList.size());
-
-            // Shuffle the sublist
-            Collections.shuffle(featureList);
-
-            // Set up the adapter with the shuffled sublist
-            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureList);
-            featureProductRecyclerView2.setAdapter(adapter);
-        } else {
-            List<Product> featureList = featureProductList.subList(startIndex, featureProductList.size());
-
-            // If the list size is 3 or less, shuffle the original list
-            Collections.shuffle(featureList);
-
-            // Set up the adapter with the shuffled original list
-            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureList);
-            featureProductRecyclerView2.setAdapter(adapter);
-        }
-    }
-
+//    private void showProductV1(List<Product> featureProductList) {
+//        Log.d("Product", "Show Product1 Called");
+//        int startIndex = featureProductList.size() / 3;
+//        int endIndex = (2 * featureProductList.size()) / 3;
+//        if (featureProductList.size() > 3) {
+//            // Calculate start and end indices for the sublist
+//
+//            // Get the sublist
+//            List<Product> featureList = featureProductList.subList(startIndex, endIndex);
+//
+//            // Shuffle the sublist
+//            Collections.shuffle(featureList);
+//
+//            // Set up the adapter with the shuffled sublist
+//            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureList);
+//            featureProductRecyclerView1.setAdapter(adapter);
+//        } else {
+//            List<Product> featureList = featureProductList.subList(endIndex, featureProductList.size());
+//
+//            // If the list size is 3 or less, shuffle the original list
+//            Collections.shuffle(featureProductList);
+//
+//            // Set up the adapter with the shuffled original list
+//            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureProductList);
+//            featureProductRecyclerView1.setAdapter(adapter);
+//        }
+//        showProductV2(featureProductList);
+//    }
+//
+//
+//    private void showProductV2(List<Product> featureProductList) {
+//        Log.d("Product", "Show Product2 Called");
+//        int startIndex = (2 * featureProductList.size()) / 3;
+//        if (featureProductList.size() > 3) {
+//            // Calculate start and end indices for the sublist
+//
+//
+//            // Get the sublist
+//            List<Product> featureList = featureProductList.subList(startIndex, featureProductList.size());
+//
+//            // Shuffle the sublist
+//            Collections.shuffle(featureList);
+//
+//            // Set up the adapter with the shuffled sublist
+//            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureList);
+//            featureProductRecyclerView2.setAdapter(adapter);
+//        } else {
+//            List<Product> featureList = featureProductList.subList(startIndex, featureProductList.size());
+//
+//            // If the list size is 3 or less, shuffle the original list
+//            Collections.shuffle(featureList);
+//
+//            // Set up the adapter with the shuffled original list
+//            FeatureProductAdapter adapter = new FeatureProductAdapter(MainActivity.this, featureList);
+//            featureProductRecyclerView2.setAdapter(adapter);
+//        }
+//    }
+//
 
     private void parseBrandJson(){
         mRequestQueue.getCache().clear();
-        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/brands_rqtfnt.json";
-
+        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/v1/Shopping%20App/brands_rqtfnt.json";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
 
             @Override
@@ -759,6 +792,7 @@ public class MainActivity extends AppCompatActivity {
                     // Compare timestamps and decide whether to insert new data
                     Log.d("latestTime", latestTime.toString());
                     Log.d("previousTime", previousTime.toString());
+                    Log.d("parseBrandJson", "Function called");
                     if (latestTime.isAfter(previousTime)) {
                         // Clear existing data and insert new products
                         brandDB.brandDAO().deleteAllData();
@@ -804,10 +838,71 @@ public class MainActivity extends AppCompatActivity {
 //                    findViewById(R.id.gridLoading).setVisibility(View.GONE);
     }
 
+    private void parseSubCategoryJson(){
+        mRequestQueue.getCache().clear();
+        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/v1/Shopping%20App/subCategory_pmqlor.json";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("subCategory");
+                    JSONObject syncTime = response.getJSONObject("syncTime");
+                    String time = syncTime.getString("time");
+
+                    // Parse the sync time into LocalDateTime
+                    LocalDateTime latestTime = LocalDateTime.parse(time);
+
+                    // Get the previous insert time from the database
+                    List<SubCategory> subCategoryList = subCategoryDb.subCategoryDAO().getAllSubCategory();
+                    LocalDateTime previousTime = LocalDateTime.MIN; // Initialize with minimum value
+
+                    // If there are products in the database, get the timestamp of the first product
+                    if (!subCategoryList.isEmpty()) {
+                        previousTime = LocalDateTime.parse(subCategoryList.get(0).getCreatedAt());
+                    }
+
+                    // Compare timestamps and decide whether to insert new data
+                    Log.d("latestTime", latestTime.toString());
+                    Log.d("previousTime", previousTime.toString());
+
+                    Log.d("parseSubCategoryJson", "Function called");
+
+                    if (latestTime.isAfter(previousTime)) {
+                        // Clear existing data and insert new products
+                        subCategoryDb.subCategoryDAO().deleteAllData();
+                        insertSubCategory(jsonArray, time);
+                    } else {
+                        // Log message indicating no new data to insert
+                        Log.d("parseCategoryJson", "No new data to insert.");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cache-Control", "no-cache");
+                headers.put("Pragma", "no-cache");
+                return headers;
+            }
+        };
+        mRequestQueue.add(request);
+
+    }
+
     private void parseCategoryJson(){
         mRequestQueue.getCache().clear();
-        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/category_wu9sa7.json";
-
+        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/v1/Shopping%20App/category_wu9sa7.json";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
 
             @Override
@@ -832,6 +927,9 @@ public class MainActivity extends AppCompatActivity {
                     // Compare timestamps and decide whether to insert new data
                     Log.d("latestTime", latestTime.toString());
                     Log.d("previousTime", previousTime.toString());
+
+                    Log.d("parseCategoryJson", "Function called");
+
                     if (latestTime.isAfter(previousTime)) {
                         // Clear existing data and insert new products
                         categoryDb.categoryDAO().deleteAllData();
@@ -851,7 +949,15 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cache-Control", "no-cache");
+                headers.put("Pragma", "no-cache");
+                return headers;
+            }
+        };
         mRequestQueue.add(request);
 
     }
@@ -916,11 +1022,34 @@ public class MainActivity extends AppCompatActivity {
 //                    findViewById(R.id.gridLoading).setVisibility(View.GONE);
     }
 
+
+    private void insertSubCategory(JSONArray jsonArray,String createdAt) throws JSONException {
+        for(int i=0;i<jsonArray.length();i++){
+
+            JSONObject responseObj = jsonArray.getJSONObject(i);
+            int id = Integer.parseInt(responseObj.getString("id"));
+            String name = responseObj.getString("name");
+            String image = responseObj.getString("image");
+            String gender = responseObj.getString("gender");
+            String category = responseObj.getString("category");
+
+            subCategoryList.add(new SubCategory(id,name,image, gender, category, createdAt));
+        }
+
+        for(SubCategory c:subCategoryList){
+            subCategoryDb.subCategoryDAO().insert(c);
+        }
+
+//                    mProductAdapter = new ProuctAdapter(ShowAllProduct.this,mProductList);
+//                    mRecyclerView.setAdapter(mProductAdapter);
+//                    mProductAdapter.setOnItemClickListener(ShowAllProduct.this);
+//                    findViewById(R.id.gridLoading).setVisibility(View.GONE);
+    }
+
     private void parseProductJson() {
         mRequestQueue.getCache().clear();
 
-        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/Shopping%20App/products_gf1bid.json";
-
+        String URL = "https://res.cloudinary.com/dq5jpef6l/raw/upload/v1/Shopping%20App/products_gf1bid.json";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null,
                 new Response.Listener<JSONObject>() {
 

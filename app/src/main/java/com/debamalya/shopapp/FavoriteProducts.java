@@ -102,6 +102,7 @@ public class FavoriteProducts extends AppCompatActivity {
             textView = findViewById(R.id.categoryNameView);
             layout.setVisibility(View.VISIBLE);
             textView.setVisibility(View.INVISIBLE);
+            favoriteProductRecyclerView.setVisibility(View.INVISIBLE);
         }
         if (favoriteList.size()>0)
             showProducts(favoriteList);

@@ -52,5 +52,23 @@ public class MoreActivity extends AppCompatActivity {
             }
         });
 
+        allProductLayout = findViewById(R.id.allProductLayout);
+        allProductLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MoreActivity.this, AllProduct.class);
+                MoreActivity.this.startActivity(intent);
+            }
+        });
+
+        policyLayout = findViewById(R.id.policyLayout);
+        policyLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MoreActivity.this, PrivacyPolicy.class);
+                MoreActivity.this.startActivity(intent);
+            }
+        });
+
     }
 }

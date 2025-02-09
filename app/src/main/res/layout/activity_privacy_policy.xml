@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".PrivacyPolicy">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbarv2" />
+
+    <ScrollView
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="10dp"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView1"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintWidth_percent="0.3"
+                app:lottie_rawRes="@raw/about"
+                android:layout_gravity="center_horizontal"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/how_it_works"
+                android:textColor="@color/black"
+                android:fontFamily="@font/average_sans"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/shopi" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/average_sans"
+                android:textStyle="bold"
+                android:text="@string/tagline_text"
+                android:textColor="@color/teal_200"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_ShopiQuik"
+                android:textSize="18sp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/average_sans"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Developer : Debamalya Palai &amp; Soukarja Dutta"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="3dp"
+                android:textColor="#111111"
+                android:fontFamily="@font/average_sans"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/gmail"
+                    android:id="@+id/mail"/>
+
+                <TextView
+                    android:id="@+id/mailText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="hello@shopiquik.com"
+                    android:textSize="16dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/average_sans"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!--            <ImageView-->
+                <!--                android:layout_width="25dp"-->
+                <!--                android:layout_height="25dp"-->
+                <!--                android:layout_marginHorizontal="5dp"-->
+                <!--                android:src="@drawable/linkedin"-->
+                <!--                android:id="@+id/linkedin"/>-->
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="© ShopiQuik"
+                    android:textSize="16dp"
+                    android:layout_gravity="end"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/teal_200"
+                    android:fontFamily="@font/average_sans"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Made with ❤ in India"
+                android:textColor="#111111"
+                android:textSize="15dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

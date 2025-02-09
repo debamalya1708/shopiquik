@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -111,10 +112,16 @@ public class FilterPage extends AppCompatActivity {
         searchProductRecyclerView.setHasFixedSize(true);
         searchProductRecyclerView.setLayoutManager(new GridLayoutManager(FilterPage.this,2));
         productResult = getAllFilterProducts(category,gender,amount,amountType);
-        Collections.shuffle(productResult);
-        Log.d("productFetchList.length",Integer.toString(productResult.size()));
+        // Remove duplicates
+        List<Product> listWithoutDuplicates = new ArrayList<>(new LinkedHashSet<>(productResult));
+
+        Collections.shuffle(listWithoutDuplicates);
+        for(Product p :productResult){
+            Log.d("productFetchList.productId",p.getId());
+        }
+        Log.d("productFetchList.length",Integer.toString(listWithoutDuplicates.size()));
         searchProductRecyclerView.setAdapter(new FeatureProductAdapter
-                (FilterPage.this, productResult));
+                (FilterPage.this, listWithoutDuplicates));
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 

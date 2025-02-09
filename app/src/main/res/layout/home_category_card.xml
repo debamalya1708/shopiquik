@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="5dp">
 
-        <RelativeLayout
-            android:layout_width="110dp"
-            android:background="@drawable/category_card"
-            android:layout_height="40dp"
-            android:padding="5dp">
+    <RelativeLayout
+        android:layout_width="110dp"
+        android:layout_height="40dp"
+        android:background="@drawable/category_card"
+        android:padding="5dp">
 
             <TextView
                 android:id="@+id/characterName"
@@ -22,19 +22,20 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/category_id"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:text="id"
-                android:fontFamily="sans-serif-light"
-                android:id="@+id/category_id"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:fontFamily="sans-serif-light"
+                android:text="id"
                 android:textColor="#111"
                 android:textSize="18sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
-        </RelativeLayout>
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -38,7 +38,7 @@ public class ProductDescription extends AppCompatActivity {
 
     TextView productTitle, productDetails, productBrand, productAmazonPrice,productBrandPrice,
             productRating,productLikes, productPriceBrand,similarCategoryItem;
-    String productCategory;
+    String productCategory, productGender;
     Button buyButtonAmazon,buyProductBrand;
     ImageView productImage, shareProductAmazon,shareOtherBrandProduct;
     private List<Product> featureProductList = new ArrayList<>();
@@ -206,14 +206,14 @@ public class ProductDescription extends AppCompatActivity {
 //        }
 //    }
 
-    private void similarCategoryProduct(String productId,String productCategory) {
+    private void similarCategoryProduct(String productId,String productCategory, String gender) {
 
-        String newSearchTerm = "%"+productCategory+"%";
+        String productCategorySearchTerm = "%"+productCategory+"%";
         featureProductList.clear();
 
-        featureProductList = productDb.mainDao().getAllProductByCategory(newSearchTerm);
+        featureProductList = productDb.mainDao().getAllProductByCategoryAndGender(productCategorySearchTerm,gender);
 
-        featureProductList.removeIf(p -> p.getId() == productId);
+        featureProductList.removeIf(p -> p.getId().equals(productId));
         Collections.shuffle(featureProductList);
 
         searchProductRecyclerView.setAdapter(new FeatureProductAdapter
@@ -261,8 +261,10 @@ public class ProductDescription extends AppCompatActivity {
                     String price = priceList.get(ind).getMarketPlacePrice();
                     String marketPlaceName = priceList.get(ind).getMarketPlaceName();
                     String link = linkList.get(ind).getMarketPlaceLink();
-                    ProductProperty productProperty = new ProductProperty(price,marketPlaceName,link);
-                    productPropertyList.add(productProperty);
+                    if(!price.equals("0")){
+                        ProductProperty productProperty = new ProductProperty(price,marketPlaceName,link);
+                        productPropertyList.add(productProperty);
+                    }
                     size--;
                     ind++;
                 }
@@ -289,6 +291,8 @@ public class ProductDescription extends AppCompatActivity {
             productRating.setText(product.get().getRating()+" ★");
 
             productCategory = product.get().getCategory();
+
+            productGender = product.get().getGender();
 
             Random random = new Random();
             // Generate a random integer between 20 and 100
@@ -360,7 +364,7 @@ public class ProductDescription extends AppCompatActivity {
 //            });
 
             similarCategoryItem.setText("More From "+ productCategory+" Category");
-            similarCategoryProduct(productId,productCategory);
+            similarCategoryProduct(productId,productCategory,productGender);
 
         }else{
             Toast.makeText(ProductDescription.this, "Coming Soon", Toast.LENGTH_SHORT).show();

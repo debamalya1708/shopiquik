@@ -15,6 +15,7 @@
     <color name ="statusbar">#ffffff</color>
     <color name="lightGrey">#eee</color>
     <color name="darkGrey">#605E5E</color>
+    <color name="Grey">#D5D5D5</color>
     <color name="transparent">#00000000</color>
 </resources>
 

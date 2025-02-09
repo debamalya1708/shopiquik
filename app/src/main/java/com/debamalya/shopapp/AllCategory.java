@@ -8,6 +8,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +36,14 @@ public class AllCategory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_category);
+
+        // Clear the cache and print result
+        boolean isCacheCleared = CacheCleaner.clearCache(this);
+        if (isCacheCleared) {
+            Log.d("Cache: ", "Cache cleared successfully.");
+        } else {
+            Log.d("Cache: ", "Failed to clear cache.");
+        }
 
         categoryDb = CategoryDB.getInstance(this);
         categoryRecyclerView = findViewById(R.id.all_category_recyclerView);

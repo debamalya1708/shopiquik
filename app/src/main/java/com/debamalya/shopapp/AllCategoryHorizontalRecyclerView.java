@@ -91,7 +91,7 @@ public class AllCategoryHorizontalRecyclerView extends
     @Override
     public AllCategoryHorizontalRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.home_brand_card,parent,false);
+                inflate(R.layout.all_category_card,parent,false);
 
         return new ViewHolder(view);
     }
@@ -122,7 +122,7 @@ public class AllCategoryHorizontalRecyclerView extends
 //                    context.startActivity(intent);
                 }
                 else {
-                    Intent intent = new Intent(context, SearchProduct.class);
+                    Intent intent = new Intent(context, SubCategoryProducts.class);
                     intent.putExtra("SearchItem", CategoryName);
                     intent.putExtra("Event", "Category");
                     context.startActivity(intent);

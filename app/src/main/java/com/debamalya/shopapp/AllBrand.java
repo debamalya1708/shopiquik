@@ -7,6 +7,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,13 @@ public class AllBrand extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_brand);
 
+        // Clear the cache and print result
+        boolean isCacheCleared = CacheCleaner.clearCache(this);
+        if (isCacheCleared) {
+            Log.d("Cache: ", "Cache cleared successfully.");
+        } else {
+            Log.d("Cache: ", "Failed to clear cache.");
+        }
 
         brandDB = BrandDB.getInstance(this);
         brandRecyclerView = findViewById(R.id.all_brand_recyclerView);

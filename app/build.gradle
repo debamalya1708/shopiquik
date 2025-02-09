@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
     buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "com.debamalya.shopapp"
         minSdk 26
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        targetSdk 34
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -62,4 +62,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
 }

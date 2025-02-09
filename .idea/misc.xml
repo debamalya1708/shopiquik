@@ -62,32 +62,44 @@
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/drawable/spinner_arrow.xml" value="0.1705" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/drawable/spinner_item_background.xml" value="0.1705" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/drawable/startfill.xml" value="0.1705" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/drawable/tab_background.xml" value="0.142" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_about_us.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_all_brand.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_all_category.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_all_product.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_favorite_products.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_filter_page.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_more.xml" value="0.264" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_privacy_policy.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_product_description.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_search_product.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_sub_category_products.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/all_category_card.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/all_sub_category_card.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/all_toolbar.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/baby_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/boy_fragment.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/brand_title_card.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/custom_dialog_layout.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/fav_toolbar.xml" value="0.264" />
-        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/home_brand_card.xml" value="0.42216358839050133" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/girl_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/home_brand_card.xml" value="0.264" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/home_category_card.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/item_image.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/main_activity_toolbar.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/men_fragment.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/more_toolbar.xml" value="0.264" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/product_card.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/product_cardv2.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/product_property.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/slider_item.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/spinner_layout.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/tab_item.xml" value="0.115625" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/toolbar.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/toolbarv2.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/women_fragment.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/menu/bottomnavigationmenu.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/menu/drawermenu.xml" value="0.25" />

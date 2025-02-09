@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".SubCategoryProducts">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/all_toolbar" />
+
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_layout"
+                android:layout_below="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/scrollContainer"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+                <LinearLayout
+                    android:id="@+id/search"
+                    android:elevation="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp">
+
+                    <TextView
+                        android:id="@+id/categoryTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="5dp"
+                        android:autoSizeMaxTextSize="15sp"
+                        android:autoSizeMinTextSize="8sp"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/average_sans"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:text="Some line will be there including category name"
+                        android:textColor="#111" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sub_category_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="2dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white">
+
+
+                        <ViewFlipper
+                            android:id="@+id/viewFlipper1"
+                            android:layout_width="match_parent"
+                            android:layout_height="190dp"
+                            android:autoStart="true">
+
+                        </ViewFlipper>
+
+                        <ImageButton
+                            android:id="@+id/btn_previous"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@id/viewFlipper1"
+                            android:layout_alignTop="@id/viewFlipper1"
+                            android:layout_alignBottom="@id/viewFlipper1"
+                            android:background="@null"
+                            android:padding="8dp"
+                            android:src="@drawable/left_rewind"
+                            app:tint="#212121" />
+
+                        <ImageButton
+                            android:id="@+id/btn_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/viewFlipper1"
+                            android:layout_alignEnd="@id/viewFlipper1"
+                            android:layout_alignBottom="@id/viewFlipper1"
+                            android:background="@null"
+                            android:padding="8dp"
+                            android:src="@drawable/right_forward"
+                            app:tint="#212121" />
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/category_product_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="2dp"/>
+
+                    <TextView
+                        android:id="@+id/viewAllProducts"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="5dp"
+                        android:autoSizeMaxTextSize="15sp"
+                        android:autoSizeMinTextSize="8sp"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/average_sans"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:text="View All "
+                        android:textColor="#111" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="2dp"
+                        app:cardCornerRadius="8dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white">
+
+                            <ViewFlipper
+                                android:id="@+id/viewFlipperCover"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:autoStart="true"
+                                android:scaleType="centerCrop" />
+
+                            <ImageButton
+                                android:id="@+id/btn_previousCover"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignStart="@id/viewFlipperCover"
+                                android:layout_alignTop="@id/viewFlipperCover"
+                                android:layout_alignBottom="@id/viewFlipperCover"
+                                android:background="@null"
+                                android:padding="8dp"
+                                android:src="@drawable/left_rewind"
+                                app:tint="#212121" />
+
+                            <ImageButton
+                                android:id="@+id/btn_nextCover"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignTop="@id/viewFlipperCover"
+                                android:layout_alignEnd="@id/viewFlipperCover"
+                                android:layout_alignBottom="@id/viewFlipperCover"
+                                android:background="@null"
+                                android:padding="8dp"
+                                android:src="@drawable/right_forward"
+                                app:tint="#212121" />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>
