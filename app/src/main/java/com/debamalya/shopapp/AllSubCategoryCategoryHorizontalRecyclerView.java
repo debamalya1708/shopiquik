@@ -115,21 +115,22 @@ public class AllSubCategoryCategoryHorizontalRecyclerView extends
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale_up);
-//                view.startAnimation(anim);
-////                String CategoryName = CategoryImages.get(position);
-//
-//                if (subCategoryName.equals("")) {
-//                    Log.d(TAG, "No Data");
-////                    Intent intent = new Intent(context, ShowAllProduct.class);
-////                    context.startActivity(intent);
-//                }
-//                else {
-//                    Intent intent = new Intent(context, SearchProduct.class);
-//                    intent.putExtra("SearchItem", subCategoryName);
-//                    intent.putExtra("Event", "Category");
+                Animation anim = AnimationUtils.loadAnimation(context, R.anim.scale_up);
+                view.startAnimation(anim);
+//                String CategoryName = CategoryImages.get(position);
+
+                if (subCategoryName.equals("")) {
+                    Log.d(TAG, "No Data");
+//                    Intent intent = new Intent(context, ShowAllProduct.class);
 //                    context.startActivity(intent);
-//                }
+                }
+                else {
+                    Intent intent = new Intent(context, SearchProduct.class);
+                    intent.putExtra("SearchItem", subCategoryName);
+                    intent.putExtra("Event", "subCategory");
+                    intent.putExtra("Category",currentItem.getCategory());
+                    context.startActivity(intent);
+                }
 
             }
 

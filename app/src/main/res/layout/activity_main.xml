@@ -76,6 +76,7 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/appbar"
                 android:id="@+id/scrollContainer"
+                android:fillViewport="true"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp">
 
@@ -145,7 +146,7 @@
                             android:fontFamily="@font/average_sans"
                             android:layout_gravity="center|center_horizontal"
                             android:gravity="center"
-                            android:text="POPULAR  B R A N D S"
+                            android:text="POPULAR  BRANDS"
                             android:textColor="#212121"
                             android:textSize="18sp" />
 
@@ -277,8 +278,16 @@
 
                     </androidx.cardview.widget.CardView>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:orientation="vertical">
+
                     <TextView
-                        android:id="@+id/giftText"
+                        android:id="@+id/categoryClothText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -286,14 +295,14 @@
                         android:gravity="center"
                         android:layout_gravity="center|center_horizontal"
                         android:layout_marginStart="5dp"
-                        android:text="EXPLORE   C L O T H E S"
+                        android:text="EXPLORE  CLOTHES"
                         android:textSize="18sp"
                         android:textColor="#212121"/>
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tabLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         app:tabTextColor="@color/tab_text_selector"
                         app:tabSelectedTextColor="@color/teal_200"
                         app:tabBackground="@drawable/tab_background"
@@ -302,6 +311,7 @@
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/viewPager"
+                        android:nestedScrollingEnabled="false"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"/>
@@ -318,7 +328,63 @@
                         android:textSize="12sp"
                         android:textAllCaps="false"
                         android:textColor="@android:color/black"
-                        android:background="@drawable/button_backto_top" />
+                        android:background="@drawable/button_view_more" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/electronicsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/average_sans"
+                        android:gravity="center"
+                        android:layout_gravity="center|center_horizontal"
+                        android:layout_marginStart="5dp"
+                        android:text="EXPLORE  ELECTRONICS"
+                        android:textSize="18sp"
+                        android:textColor="#212121"/>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/electronicsTabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:tabTextColor="@color/tab_text_selector"
+                        app:tabSelectedTextColor="@color/teal_200"
+                        app:tabBackground="@drawable/tab_background"
+                        app:tabIndicatorColor="@color/purple_500"
+                        app:tabIndicatorHeight="3dp"/>
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/electronicsViewPager"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <Button
+                        android:id="@+id/electronics_view_more_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center|center_horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"
+                        android:text="View More"
+                        android:fontFamily="@font/average_sans"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:background="@drawable/button_view_more" />
+
+                </LinearLayout>
 
                 </LinearLayout>
 
@@ -342,7 +408,7 @@
         android:textSize="12sp"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
-        android:background="@drawable/button_backto_top" />
+        android:background="@drawable/button_view_more" />
 
     <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

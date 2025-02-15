@@ -1,11 +1,11 @@
 package com.debamalya.shopapp;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,24 +13,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
-public class BabyFragment extends Fragment{
+public class SearchFragment extends Fragment{
 
-    private static final String ARG_CATEGORY = "category";
-    private String category;
+    private static final String ARG_GENDER = "search";
+    private String gender;
     private RecyclerView recyclerView;
     private List<Product> featureProductList = new ArrayList<>();
-    private RoomDB productDb;
 
-
-    public static BabyFragment newInstance(String category) {
-        BabyFragment fragment = new BabyFragment();
+    public static SearchFragment newInstance(String gender, List<Product> products) {
+        SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_CATEGORY, category);
+        args.putString(ARG_GENDER, gender);
+        args.putSerializable("products", (Serializable) products);
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,7 +38,8 @@ public class BabyFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            category = getArguments().getString(ARG_CATEGORY);
+            gender = getArguments().getString(ARG_GENDER);
+            featureProductList = (List<Product>) getArguments().getSerializable("products");
         }
     }
 
@@ -49,33 +49,36 @@ public class BabyFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.baby_fragment, container, false);
-        recyclerView = view.findViewById(R.id.baby_product_recyclerView);
+        View view = inflater.inflate(R.layout.search_fragment, container, false);
+        recyclerView = view.findViewById(R.id.search_product_recyclerView);
 
         fetchProducts(); // Fetch products when the fragment is created
         return view;
     }
 
     private void fetchProducts() {
-        category = category.toLowerCase();
-        String productCategorySearchTerm = category+"%";
-        Log.d("productCategorySearchTerm", productCategorySearchTerm);
 
-        featureProductList.clear();
+        List<Product> filteredList = new ArrayList<>();
 
-        productDb=RoomDB.getInstance(getContext());
-
-        featureProductList = productDb.mainDao().getAllProductBySubCategory(productCategorySearchTerm,"Clothes");
-        Log.d("featureProductList", String.valueOf(featureProductList.size()));
+        for (Product product : featureProductList) {
+            if (product.getGender().equals(gender)) {
+                filteredList.add(product);
+            }
+        }
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        featureProductList = featureProductList.subList(0,Math.min(featureProductList.size(),10));
-        Collections.shuffle(featureProductList);
+        Collections.shuffle(filteredList);
+        FeatureProductAdapter adapter;
 
-        FeatureProductAdapter adapter = new FeatureProductAdapter
-                (getContext(), featureProductList);
+        if(!gender.equals("All")){
+            adapter = new FeatureProductAdapter
+                    (getContext(), filteredList);
+        }else{
+            adapter = new FeatureProductAdapter
+                    (getContext(), featureProductList);
+        }
 
         recyclerView.setAdapter(adapter);
     }

@@ -73,7 +73,7 @@
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_more.xml" value="0.264" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_privacy_policy.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_product_description.xml" value="0.25" />
-        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_search_product.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_search_product.xml" value="0.19559902200489" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/activity_sub_category_products.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/all_category_card.xml" value="0.25" />
@@ -83,6 +83,7 @@
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/boy_fragment.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/brand_title_card.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/custom_dialog_layout.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/electronics_fragment.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/fav_toolbar.xml" value="0.264" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/girl_fragment.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/home_brand_card.xml" value="0.264" />
@@ -94,6 +95,7 @@
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/product_card.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/product_cardv2.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/product_property.xml" value="0.25" />
+        <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/search_fragment.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/slider_item.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/spinner_layout.xml" value="0.25" />
         <entry key="..\:/Users/debam/AndroidStudioProjects/ShopApp/app/src/main/res/layout/tab_item.xml" value="0.115625" />

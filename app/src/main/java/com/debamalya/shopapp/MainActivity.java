@@ -127,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
     private Animation fadeOutAnimation;
     private List<String> categories = Arrays.asList("Men", "Women", "Boys", "Girls");
 
+    private List<String> electronicsCategories = Arrays.asList("Watch", "Mobile", "Head sets", "Laptop");
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,6 +191,18 @@ public class MainActivity extends AppCompatActivity {
         ).attach();
 
         tabLayout.getTabAt(0).select(); // Select first tab by default
+
+        TabLayout electronicTabLayout = findViewById(R.id.electronicsTabLayout);
+        ViewPager2 electronicViewPager = findViewById(R.id.electronicsViewPager);
+
+        ElectronicsTabPagerAdapter electronicAdapter = new ElectronicsTabPagerAdapter(this);
+        electronicViewPager.setAdapter(electronicAdapter);
+
+        new TabLayoutMediator(electronicTabLayout, electronicViewPager, (tab, position) ->
+                tab.setText(electronicsCategories.get(position))
+        ).attach();
+
+        electronicTabLayout.getTabAt(0).select(); // Select first tab by default
 
         mRequestQueue = Volley.newRequestQueue(MainActivity.this);
 

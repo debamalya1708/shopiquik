@@ -6,17 +6,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class TabPagerAdapter extends FragmentStateAdapter {
-    private String[] categories = {"man", "women", "boys", "girls"};
+public class ElectronicsTabPagerAdapter extends FragmentStateAdapter {
+    private String[] categories = {"watch", "mobile", "headphones", "laptop"};
 
-    public TabPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public ElectronicsTabPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return BabyFragment.newInstance(categories[position]);
+        return ElectronicsFragment.newInstance(categories[position]);
     }
 
     @Override

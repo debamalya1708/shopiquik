@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,19 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
-public class BabyFragment extends Fragment{
+public class ElectronicsFragment extends Fragment{
 
-    private static final String ARG_CATEGORY = "category";
+    private static final String ARG_CATEGORY = "electronics";
     private String category;
     private RecyclerView recyclerView;
     private List<Product> featureProductList = new ArrayList<>();
     private RoomDB productDb;
 
 
-    public static BabyFragment newInstance(String category) {
-        BabyFragment fragment = new BabyFragment();
+    public static ElectronicsFragment newInstance(String category) {
+        ElectronicsFragment fragment = new ElectronicsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_CATEGORY, category);
         fragment.setArguments(args);
@@ -49,8 +47,8 @@ public class BabyFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.baby_fragment, container, false);
-        recyclerView = view.findViewById(R.id.baby_product_recyclerView);
+        View view = inflater.inflate(R.layout.electronics_fragment, container, false);
+        recyclerView = view.findViewById(R.id.electronics_product_recyclerView);
 
         fetchProducts(); // Fetch products when the fragment is created
         return view;
@@ -58,14 +56,14 @@ public class BabyFragment extends Fragment{
 
     private void fetchProducts() {
         category = category.toLowerCase();
-        String productCategorySearchTerm = category+"%";
+        String productCategorySearchTerm = "%"+category+"%";
         Log.d("productCategorySearchTerm", productCategorySearchTerm);
 
         featureProductList.clear();
 
         productDb=RoomDB.getInstance(getContext());
 
-        featureProductList = productDb.mainDao().getAllProductBySubCategory(productCategorySearchTerm,"Clothes");
+        featureProductList = productDb.mainDao().getAllProductBySubCategory(productCategorySearchTerm,"Electronics");
         Log.d("featureProductList", String.valueOf(featureProductList.size()));
 
         recyclerView.setHasFixedSize(true);

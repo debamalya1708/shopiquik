@@ -35,7 +35,7 @@ public interface MainDAO {
     @Query("SELECT * FROM product WHERE category LIKE :value ")
     List<Product> getAllProductByCategory(String value);
 
-    @Query("SELECT * FROM product WHERE subCategory = :value AND category = :category")
+    @Query("SELECT * FROM product WHERE subCategory like :value AND category = :category")
     List<Product> getAllProductBySubCategory(String value, String category);
 
     @Query("SELECT * FROM product WHERE category LIKE :value AND gender = :gender")
@@ -44,7 +44,7 @@ public interface MainDAO {
     @Query("SELECT * FROM product WHERE brand LIKE :value ")
     List<Product> getAllProductByBrand(String value);
 
-    @Query("SELECT * FROM product WHERE title LIKE :value OR description LIKE :value OR occasion LIKE :value")
+    @Query("SELECT * FROM product WHERE title LIKE :value OR subCategory LIKE :value OR occasion LIKE :value")
     List<Product> searchProduct(String value);
 
     @Query("SELECT * FROM product WHERE id = :value ")
